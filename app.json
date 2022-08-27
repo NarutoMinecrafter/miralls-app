@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Miralls",
+    "slug": "miralls",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "translucent": false
+    },
+    "androidNavigationBar": {
+      "backgroundColor": "#000000"
+    },
+    "splash": {
+      "image": "./assets/logo-black.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "backgroundColor": "#000000",
+      "supportsTablet": true
+    },
+    "android": {
+      "backgroundColor": "#000000",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png"
+      },
+      "package": "com.miralls"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

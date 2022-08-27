@@ -1,0 +1,148 @@
+Error:
+  Title: Ошибка
+  UNDEFINED: Что-то пошло не так...
+  BAD_REQUEST: Пожалуйста, проверьте введённые данные
+  UNAUTHORIZED: Доступ ограничен
+  FORBIDDEN: У вас нет прав для выполнения этого действия
+  TOO_MANY_REQUESTS: Попробуйте ещё раз чуть позже
+  SERVER_ERROR: Что-то пошло не так...
+
+ServerError:
+  Title: Сервер недоступен
+  TextBody: Пожалуйста, попробуйте ещё раз чуть позже
+
+Login:
+  Username: Телефон или имя пользователя
+  Password: Пароль
+  Button: Войти
+  ForgotPassword: Забыли пароль?
+  MoveToRegisterScreen:
+    - Нет аккаунта?
+    - Зарегистрируйтесь.
+
+  Error:
+    INVALID_CREDENTIALS: Неверное имя пользователя или пароль
+
+RestorePassword:
+  PhoneNumber:
+    Title: Подтверждение номера телефона
+    SubText: Введите номер телефона, который вы использовали при регистрации
+    PhoneNumber: Номер телефона
+    Button: Далее
+
+  Code:
+    Title: Подтверждение номера телефона
+    SubText: Мы отправили одноразовый код на ваш номер телефона. Введите его в поле ниже.
+    Code: Код из SMS
+    Button: Далее
+
+  NewPassword:
+    Title: Придумайте новый пароль
+    SubText: Он должен содержать более 8 символов
+    Password: Новый пароль
+    PasswordAgain: Повторите пароль
+    Button: Далее
+
+  Error:
+    INVALID_PHONE_NUMBER: Пожалуйста, проверьте введённый номер телефона
+    INVALID_CODE: Указан неверный код из SMS
+    INVALID_PASSWORD: Пожалуйста, проверьте введённый пароль
+    TOO_MANY_REQUESTS: Следующий код можно будет отправить через {seconds} секунд(ы)
+    PASSWORDS_DONT_MATCH: Пароли не совпадают
+
+  Success: Ваш пароль был изменён
+
+Register:
+  Username: Введите имя пользователя
+  PhoneNumber: Номер телефона
+  Password: Пароль (от 8 до 32 символов)
+  PasswordAgain: Повторите пароль
+  Button: Зарегистрироваться
+  AlreadyHaveAnAccount:
+    - Уже есть аккаунт?
+    - Войдите.
+  PhoneConfirmationScreen:
+    Title: Подтверждение номера телефона
+    SubText: Мы отправили одноразовый код на ваш номер телефона. Введите его в поле ниже.
+    Code: Код из SMS
+    Button: Далее
+
+  Error:
+    PASSWORDS_DONT_MATCH: Пароли не совпадают
+    INVALID_USERNAME: Пожалуйста, укажите корректное имя пользователя
+    INVALID_PASSWORD: Пожалуйста, проверьте введённый пароль
+    INVALID_PHONE_NUMBER: Пожалуйста, проверьте введённый номер телефона
+    INVALID_CODE: Указан неверный код из SMS
+    USERNAME_ALREADY_TAKEN: Указанное имя пользователя уже занято
+    PHONE_NUMBER_ALREADY_REGISTRED: Указанный номер телефона уже зарегистрирован
+    TOO_MANY_REQUESTS: Следующий код можно будет отправить через {seconds} секунд(ы)
+
+ProfileScreen:
+  Posts: Публикации
+  Followers: Подписчики
+  Followed: Подписки
+  NoPosts: Тут пока ничего нет...
+
+  Buttons:
+    EditProfile: Изменить
+    Archive: Архив
+
+  Menu:
+    Settings: Настройки
+    ChangePassword: Изменить пароль
+    Archive: Архив
+    Support: Центр поддержки Miralls
+    LogOut: Выйти из аккаунта
+
+ArchiveScreen:
+  Title: Архив
+
+ProfileEditScreen:
+  EditProfilePhoto: Изменить фото профиля
+  DeleteProfilePhoto: Удалить фото профиля
+  EditProfilePhotoOK: Фото профиля обновлено
+  Title: Редактировать профиль
+  Name: Имя
+  Username: Имя пользователя
+  Bio: О себе
+  BioPlaceholder: Напишите что-нибудь...
+
+  Error:
+    INVALID_USERNAME: Пожалуйста, укажите корректное имя пользователя
+    INVALID_PICTURE: Пожалуйста, выберите другое фото
+
+AddPostScreen:
+  Title: Новая публикация
+
+  SelectMedia:
+    Recent: Недавние
+
+  Other:
+    Description: Добавьте подпись...
+
+  Error:
+    INVALID_PICTURE: Пожалуйста, выберите другое фото
+    DESCRIPTION_IS_TOO_LARGE: Подпись может содержать не более 500 символов
+
+Post:
+  Menu:
+    CommentsOff: Выключить комментарии
+    CommentsOn: Включить комментарии
+    AddToArchive: Добавить в архив
+    ReturnFromArchive: Вернуть из архива
+    Delete: Удалить пост
+    Report: Пожаловаться
+
+ReportReason:
+  Spam: Спам
+
+Comment:
+  Placeholder: Напишите что-нибудь...
+
+EmptyList: Тут пока ничего нет...
+
+Success: Успешно
+Done: Готово
+Next: Далее
+Cancel: Отмена
+Back: Назад
