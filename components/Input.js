@@ -1,120 +1,100 @@
-import React from 'react'
-import { View, TextInput, Pressable, Text } from 'react-native';
-import { Sizes, Colors } from '../constants'
-import { useTogglePasswordVisibility } from './hooks/useTogglePasswordVisibility';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import React from "react";
+import { Colors } from "../constants";
+import { useTogglePasswordVisibility } from "./hooks/useTogglePasswordVisibility";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  IconButton,
+  TextInput,
+  ThemeProvider,
+  useTheme,
+} from "@react-native-material/core";
 
 export default function Input({
-    name,
-    placeholder,
-    placeholderTextColor,
-    passwordVisiblityButton = false,
-    secureTextEntry,
-    textContentType,
-    dataDetectorTypes,
-    keyboardType,
-    maxLength,
-    onFocus,
-    onChange,
-    onChangeText,
-    onEndEditing,
-    value,
-    multiline = true,
-    label,
-    validationError = false,
-    validationErrorText,
-    textInputStyle,
-    wrapperStyle,
+  name,
+  placeholder,
+  passwordVisiblityButton = false,
+  secureTextEntry,
+  textContentType,
+  dataDetectorTypes,
+  keyboardType,
+  maxLength,
+  onFocus,
+  onChange,
+  onChangeText,
+  onEndEditing,
+  value,
+  multiline = true,
+  label,
+  validationError = false,
+  validationErrorText,
+  textInputStyle,
+  wrapperStyle,
 }) {
-    const { passwordVisibility, rightIcon, handlePasswordVisibility } =
+  const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
-    const [textInputValue, setTextInputValue] = React.useState(value);
+  const [textInputValue, setTextInputValue] = React.useState(value);
+  const theme = useTheme();
 
-    if (value != textInputValue) setTextInputValue(value)
-
-    return (
-        <View style={[wrapperStyle]}>
-            {label ? (
-                <Text style={[
-                    style.Label,
-                    validationError ? style.LabelValidationError : null
-                ]}>{label}</Text>
-            ) : null}
-
-            <TextInput
-                style={[
-                    style.TextInput,
-                    textInputStyle,
-                    validationError ? style.TextInputValidationError : null
-                ]}
-                name={name}
-                placeholder={placeholder}
-                placeholderTextColor={
-                    validationError ? Colors.Input.ValidationError.PlaceholderTextColor : placeholderTextColor
-                }
-                secureTextEntry={
-                    passwordVisiblityButton ? passwordVisibility : secureTextEntry
-                }
-                textContentType={textContentType}
-                dataDetectorTypes={dataDetectorTypes}
-                keyboardType={keyboardType}
-                maxLength={maxLength}
-                onChange={onChange}
-                onChangeText={(text) => {
-                    setTextInputValue(text);
-                    onChangeText(text);
-                }}
-                onFocus={onFocus}
-                onEndEditing={onEndEditing}
-                value={textInputValue}
-                multiline={multiline}
-            >
-            </TextInput>
-            {passwordVisiblityButton ? (
-                <View style={pressableWrapperStyle}>
-                    <Pressable onPress={handlePasswordVisibility}>
-                        <MaterialCommunityIcons name={rightIcon} size={22} color={Colors.White}/>
-                    </Pressable>
-                </View>
-            ): (<></>)}
-        </View>
-    );
-}
-
-const style = {
-    TextInput: {
-        backgroundColor: Colors.Input.BackgroundColor,
-        color: Colors.Input.Color,
-        paddingVertical: Sizes.Input.PaddingVertical,
-        paddingHorizontal: Sizes.Input.PaddingHorizontal,
-        fontSize: Sizes.Input.FontSize,
-        borderRadius: Sizes.Input.BorderRadius,
-        borderWidth: Sizes.Input.BorderWidth,
-        borderColor: Colors.Input.BorderColor,
+  const newTheme = {
+    ...theme,
+    palette: {
+      ...theme.palette,
+      surface: {
+        main: theme.palette.surface.main,
+        on:
+          validationError || validationErrorText
+            ? "red"
+            : theme.palette.surface.on,
+      },
     },
-    TextInputValidationError: {
-        borderColor: Colors.Input.ValidationError.BorderColor,
-        color: Colors.Input.ValidationError.Color,
-    },
-    Label: {
-        color: Colors.InputLabel.Color,
-        marginBottom: 8,
-        marginLeft: 4,
-        fontFamily: 'SF-Regular',
-        fontSize: 16,
-    },
-    LabelValidationError: {
-        color: Colors.InputLabel.ValidationError.Color,
-    }
-}
+  };
 
-const pressableWrapperStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    position: 'absolute',
-    right: 15,
-    // backgroundColor: 'red',
-    top: Sizes.Input.MarginTop + 6,
-    height: '100%',
+  if (value != textInputValue) setTextInputValue(value);
+
+  return (
+    <ThemeProvider theme={newTheme}>
+      <TextInput
+        style={[wrapperStyle]}
+        inputStyle={textInputStyle}
+        name={name}
+        label={placeholder || label}
+        variant="outlined"
+        color={validationError || validationErrorText ? "error" : "primary"}
+        helperText={validationErrorText}
+        secureTextEntry={
+          passwordVisiblityButton ? passwordVisibility : secureTextEntry
+        }
+        textContentType={textContentType}
+        dataDetectorTypes={dataDetectorTypes}
+        keyboardType={keyboardType}
+        maxLength={maxLength}
+        onChange={onChange}
+        onChangeText={(text) => {
+          setTextInputValue(text);
+          onChangeText(text);
+        }}
+        onFocus={onFocus}
+        onEndEditing={onEndEditing}
+        value={textInputValue}
+        multiline={multiline}
+        trailing={
+          passwordVisiblityButton
+            ? (props) => (
+                <IconButton
+                  onPress={handlePasswordVisibility}
+                  icon={(props) => (
+                    <MaterialCommunityIcons
+                      name={rightIcon}
+                      size={22}
+                      color={Colors.White}
+                    />
+                  )}
+                  {...props}
+                />
+              )
+            : undefined
+        }
+      ></TextInput>
+    </ThemeProvider>
+  );
 }
