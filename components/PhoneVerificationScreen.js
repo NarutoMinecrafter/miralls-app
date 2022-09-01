@@ -37,7 +37,7 @@ export default function PhoneVerificationScreen({
       setCode(intFromString(_code));
       var valid = FieldsValidator.isCodeValid(_code);
       setIsCodeValid(valid);
-      if (valid) setCodeError(false);
+      if (valid) setCodeError("");
     }
   }
 
@@ -88,9 +88,13 @@ export default function PhoneVerificationScreen({
             placeholderTextColor={Colors.Input.PlaceholderTextColor}
             keyboardType="phone-pad"
             maxLength={SMS_CODE_LENGTH}
-            validationError={codeError}
+            validationErrorText={codeError}
             onChangeText={(text) => processForm(text)}
-            onEndEditing={() => setCodeError(!isCodeValid)}
+            onEndEditing={() =>
+              setCodeError(
+                isCodeValid ? "" : _("Register").ValidationError.InvalidCode
+              )
+            }
           />
 
           <Button

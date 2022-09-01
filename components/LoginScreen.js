@@ -24,11 +24,11 @@ export default function LoginScreen({ navigation }) {
 
   const [username, setUsername] = React.useState(null);
   const [isUsernameValid, setIsUsernameValid] = React.useState(false);
-  const [usernameError, setUsernameError] = React.useState(false);
+  const [usernameError, setUsernameError] = React.useState("");
 
   const [password, setPassword] = React.useState(null);
   const [isPasswordValid, setIsPasswordValid] = React.useState(false);
-  const [passwordError, setPasswordError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState("");
   const isFocused = useIsFocused();
 
   useFocusEffect(
@@ -38,10 +38,10 @@ export default function LoginScreen({ navigation }) {
         if (!isFocused) {
           setUsername(null);
           setIsUsernameValid(false);
-          setUsernameError(false);
+          setUsernameError("");
           setPassword(null);
           setIsPasswordValid(false);
-          setPasswordError(false);
+          setPasswordError("");
         }
       };
       return () => unsubscribe();
@@ -54,13 +54,13 @@ export default function LoginScreen({ navigation }) {
       setUsername(_username);
       var valid = FieldsValidator.isUsernameOrPhoneNumberValid(_username);
       setIsUsernameValid(valid);
-      if (valid) setUsernameError(false);
+      if (valid) setUsernameError("");
     }
     if (_password != null) {
       setPassword(_password);
       var valid = FieldsValidator.isPasswordValid(_password);
       setIsPasswordValid(valid);
-      if (valid) setPasswordError(false);
+      if (valid) setPasswordError("");
     }
   }
 
@@ -101,9 +101,13 @@ export default function LoginScreen({ navigation }) {
             wrapperStyle={s.Input}
             placeholder={t.Username}
             placeholderTextColor={Colors.Input.PlaceholderTextColor}
-            validationError={usernameError}
+            validationErrorText={usernameError}
             onChangeText={(text) => processForm(text, null)}
-            onEndEditing={() => setUsernameError(!isUsernameValid)}
+            onEndEditing={() =>
+              setUsernameError(
+                isUsernameValid ? "" : t.ValidationError.InvalidPhoneOrName
+              )
+            }
             value={username}
           />
 
@@ -112,9 +116,13 @@ export default function LoginScreen({ navigation }) {
             placeholder={t.Password}
             placeholderTextColor={Colors.Input.PlaceholderTextColor}
             passwordVisiblityButton={true}
-            validationError={passwordError}
+            validationErrorText={passwordError}
             onChangeText={(text) => processForm(null, text)}
-            onEndEditing={() => setPasswordError(!isPasswordValid)}
+            onEndEditing={() =>
+              setPasswordError(
+                isPasswordValid ? "" : t.ValidationError.InvalidPassword
+              )
+            }
             value={password}
           />
 

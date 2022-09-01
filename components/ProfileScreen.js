@@ -20,7 +20,7 @@ import { getPostPictureURL, getPosts } from "./utils/post";
 import UserPictureRounded from "./UserPictureRounded";
 import { numberToReadableStr } from "./utils";
 import EmptyList from "./EmptyList";
-import { Button, TextInput } from "@react-native-material/core";
+import { Button } from "@react-native-material/core";
 
 import { logOut } from "./utils/user";
 
@@ -184,6 +184,7 @@ export default function ProfileScreen({ navigation }) {
               </View>
               <View style={s.Buttons.Wrapper}>
                 <Button
+                  variant="outlined"
                   title={t.Buttons.EditProfile}
                   onPress={() => {
                     navigation.navigate("EditProfileScreen");
@@ -195,6 +196,7 @@ export default function ProfileScreen({ navigation }) {
                   ]}
                 />
                 <Button
+                  variant="outlined"
                   title={t.Buttons.Archive}
                   onPress={() => {
                     navigation.navigate("ArchiveScreen");

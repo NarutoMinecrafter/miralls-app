@@ -43,10 +43,18 @@ export default function Input({
         main: theme.palette.surface.main,
         on:
           validationError || validationErrorText
-            ? "red"
+            ? Colors.Input.ValidationError.Color
             : theme.palette.surface.on,
       },
     },
+  };
+
+  const styles = {
+    backgroundColor: "black",
+    color:
+      validationError || validationErrorText
+        ? Colors.Input.ValidationError.Color
+        : Colors.White,
   };
 
   if (value != textInputValue) setTextInputValue(value);
@@ -54,8 +62,9 @@ export default function Input({
   return (
     <ThemeProvider theme={newTheme}>
       <TextInput
-        style={[wrapperStyle]}
-        inputStyle={textInputStyle}
+        style={[wrapperStyle, styles]}
+        inputContainerStyle={styles}
+        inputStyle={[textInputStyle, styles]}
         name={name}
         label={placeholder || label}
         variant="outlined"

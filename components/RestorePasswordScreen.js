@@ -25,19 +25,19 @@ export default function RestorePasswordScreen({ navigation }) {
 
   const [phoneNumber, setPhoneNumber] = React.useState(null);
   const [isPhoneNumberValid, setIsPhoneNumberValid] = React.useState(false);
-  const [phoneNumberError, setPhoneNumberError] = React.useState(false);
+  const [phoneNumberError, setPhoneNumberError] = React.useState("");
 
   const [code, setCode] = React.useState(null);
   const [isCodeValid, setIsCodeValid] = React.useState(false);
-  const [codeError, setCodeError] = React.useState(false);
+  const [codeError, setCodeError] = React.useState("");
 
   const [password, setPassword] = React.useState(null);
   const [isPasswordValid, setIsPasswordValid] = React.useState(false);
-  const [passwordError, setPasswordError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState("");
 
   const [passwordAgain, setPasswordAgain] = React.useState(null);
   const [isPasswordAgainValid, setIsPasswordAgainValid] = React.useState(false);
-  const [passwordAgainError, setPasswordAgainError] = React.useState(false);
+  const [passwordAgainError, setPasswordAgainError] = React.useState("");
 
   const isFocused = useIsFocused();
 
@@ -50,19 +50,19 @@ export default function RestorePasswordScreen({ navigation }) {
 
           setPhoneNumber(null);
           setIsPhoneNumberValid(false);
-          setPhoneNumberError(false);
+          setPhoneNumberError("");
 
           setCode(null);
           setIsCodeValid(false);
-          setCodeError(false);
+          setCodeError("");
 
           setPassword(null);
           setIsPasswordValid(false);
-          setPasswordError(false);
+          setPasswordError("");
 
           setPasswordAgain(null);
           setIsPasswordAgainValid(false);
-          setPasswordAgainError(false);
+          setPasswordAgainError("");
         }
       };
       return () => unsubscribe();
@@ -75,25 +75,25 @@ export default function RestorePasswordScreen({ navigation }) {
       setPhoneNumber(_phoneNumber);
       var valid = FieldsValidator.isPhoneNumberValid(_phoneNumber);
       setIsPhoneNumberValid(valid);
-      if (valid) setPhoneNumberError(false);
+      if (valid) setPhoneNumberError("");
     }
     if (_code != null) {
       setCode(_code);
       var valid = FieldsValidator.isCodeValid(_code);
       setIsCodeValid(valid);
-      if (valid) setCodeError(false);
+      if (valid) setCodeError("");
     }
     if (_password != null) {
       setPassword(_password);
       var valid = FieldsValidator.isPasswordValid(_password);
       setIsPasswordValid(valid);
-      if (valid) setPasswordError(false);
+      if (valid) setPasswordError("");
     }
     if (_passwordAgain != null) {
       setPasswordAgain(_passwordAgain);
       var valid = FieldsValidator.isPasswordValid(_passwordAgain);
       setIsPasswordAgainValid(valid);
-      if (valid) setPasswordAgainError(false);
+      if (valid) setPasswordAgainError("");
     }
   }
 
@@ -180,9 +180,13 @@ export default function RestorePasswordScreen({ navigation }) {
                 dataDetectorTypes="phoneNumber"
                 keyboardType="phone-pad"
                 maxLength={14}
-                validationError={phoneNumberError}
+                validationErrorText={phoneNumberError}
                 onChangeText={(text) => processForm(text)}
-                onEndEditing={() => setPhoneNumberError(!isPhoneNumberValid)}
+                onEndEditing={() =>
+                  setPhoneNumberError(
+                    isPhoneNumberValid ? "" : _t.ValidationError.InvalidPhone
+                  )
+                }
                 value={phoneNumber}
               />
 
@@ -219,9 +223,13 @@ export default function RestorePasswordScreen({ navigation }) {
                 placeholderTextColor={Colors.Input.PlaceholderTextColor}
                 keyboardType="phone-pad"
                 maxLength={SMS_CODE_LENGTH}
-                validationError={codeError}
+                validationErrorText={codeError}
                 onChangeText={(text) => processForm(null, text)}
-                onEndEditing={() => setCodeError(!isCodeValid)}
+                onEndEditing={() =>
+                  setCodeError(
+                    isCodeValid ? "" : _t.ValidationError.InvalidCode
+                  )
+                }
                 value={null}
               />
 
@@ -262,9 +270,13 @@ export default function RestorePasswordScreen({ navigation }) {
                 placeholder={t.Password}
                 placeholderTextColor={Colors.Input.PlaceholderTextColor}
                 passwordVisiblityButton={true}
-                validationError={passwordError}
+                validationErrorText={passwordError}
                 onChangeText={(text) => processForm(null, null, text, null)}
-                onEndEditing={() => setPasswordError(!isPasswordValid)}
+                onEndEditing={() =>
+                  setPasswordError(
+                    isPasswordValid ? "" : _t.ValidationError.InvalidPassword
+                  )
+                }
                 value={password}
               />
 
@@ -273,10 +285,14 @@ export default function RestorePasswordScreen({ navigation }) {
                 placeholder={t.PasswordAgain}
                 placeholderTextColor={Colors.Input.PlaceholderTextColor}
                 passwordVisiblityButton={true}
-                validationError={passwordAgainError}
+                validationErrorText={passwordAgainError}
                 onChangeText={(text) => processForm(null, null, null, text)}
                 onEndEditing={() =>
-                  setPasswordAgainError(!isPasswordAgainValid)
+                  setPasswordAgainError(
+                    isPasswordAgainValid
+                      ? ""
+                      : _t.ValidationError.InvalidPassword
+                  )
                 }
                 value={passwordAgain}
               />

@@ -60,23 +60,23 @@ export default function RegisterScreen({ navigation }) {
 
           setUsername(null);
           setIsUsernameValid(false);
-          setUsernameError(false);
+          setUsernameError("");
 
           setPhoneNumber(null);
           setIsPhoneNumberValid(false);
-          setPhoneNumberError(false);
+          setPhoneNumberError("");
 
           setCode(null);
           setIsCodeValid(false);
-          setCodeError(false);
+          setCodeError("");
 
           setPassword(null);
           setIsPasswordValid(false);
-          setPasswordError(false);
+          setPasswordError("");
 
           setPasswordAgain(null);
           setIsPasswordAgainValid(false);
-          setPasswordAgainError(false);
+          setPasswordAgainError("");
         }
       };
       return () => unsubscribe();
@@ -95,31 +95,31 @@ export default function RegisterScreen({ navigation }) {
       setUsername(_username);
       var valid = FieldsValidator.isUsernameValid(_username);
       setIsUsernameValid(valid);
-      if (valid) setUsernameError(false);
+      if (valid) setUsernameError("");
     }
     if (_phoneNumber != null) {
       setPhoneNumber(_phoneNumber);
       var valid = FieldsValidator.isPhoneNumberValid(_phoneNumber);
       setIsPhoneNumberValid(valid);
-      if (valid) setPhoneNumberError(false);
+      if (valid) setPhoneNumberError("");
     }
     if (_password != null) {
       setPassword(_password);
       var valid = FieldsValidator.isPasswordValid(_password);
       setIsPasswordValid(valid);
-      if (valid) setPasswordError(false);
+      if (valid) setPasswordError("");
     }
     if (_passwordAgain != null) {
       setPasswordAgain(_passwordAgain);
       var valid = FieldsValidator.isPasswordValid(_passwordAgain);
       setIsPasswordAgainValid(valid);
-      if (valid) setPasswordAgainError(false);
+      if (valid) setPasswordAgainError("");
     }
     if (_code != null) {
       setCode(_code);
       var valid = FieldsValidator.isCodeValid(_code);
       setIsCodeValid(valid);
-      if (valid) setCodeError(false);
+      if (valid) setCodeError("");
     }
   }
 
@@ -202,10 +202,14 @@ export default function RegisterScreen({ navigation }) {
                 wrapperStyle={s.Input}
                 placeholder={t.Username}
                 placeholderTextColor={Colors.Input.PlaceholderTextColor}
-                validationError={usernameError}
+                validationErrorText={usernameError}
                 onChangeText={(text) => processForm(text, null, null, null)}
                 value={username}
-                onEndEditing={() => setUsernameError(!isUsernameValid)}
+                onEndEditing={() =>
+                  setUsernameError(
+                    isUsernameValid ? "" : t.ValidationError.InvalidName
+                  )
+                }
               />
 
               <Input
@@ -216,9 +220,13 @@ export default function RegisterScreen({ navigation }) {
                 dataDetectorTypes="phoneNumber"
                 keyboardType="phone-pad"
                 maxLength={14}
-                validationError={phoneNumberError}
+                validationErrorText={phoneNumberError}
                 onChangeText={(text) => processForm(null, text, null, null)}
-                onEndEditing={() => setPhoneNumberError(!isPhoneNumberValid)}
+                onEndEditing={() =>
+                  setPhoneNumberError(
+                    isPhoneNumberValid ? "" : t.ValidationError.InvalidPhone
+                  )
+                }
                 value={phoneNumber}
               />
 
@@ -227,9 +235,13 @@ export default function RegisterScreen({ navigation }) {
                 placeholder={t.Password}
                 placeholderTextColor={Colors.Input.PlaceholderTextColor}
                 passwordVisiblityButton={true}
-                validationError={passwordError}
+                validationErrorText={passwordError}
                 onChangeText={(text) => processForm(null, null, text, null)}
-                onEndEditing={() => setPasswordError(!isPasswordValid)}
+                onEndEditing={() =>
+                  setPasswordError(
+                    isPasswordValid ? "" : t.ValidationError.InvalidPassword
+                  )
+                }
                 value={password}
               />
 
@@ -238,10 +250,14 @@ export default function RegisterScreen({ navigation }) {
                 placeholder={t.PasswordAgain}
                 placeholderTextColor={Colors.Input.PlaceholderTextColor}
                 passwordVisiblityButton={true}
-                validationError={passwordAgainError}
+                validationErrorText={passwordAgainError}
                 onChangeText={(text) => processForm(null, null, null, text)}
                 onEndEditing={() =>
-                  setPasswordAgainError(!isPasswordAgainValid)
+                  setPasswordAgainError(
+                    isPasswordAgainValid
+                      ? ""
+                      : t.ValidationError.InvalidPassword
+                  )
                 }
                 value={passwordAgain}
               />
@@ -295,11 +311,13 @@ export default function RegisterScreen({ navigation }) {
                 placeholderTextColor={Colors.Input.PlaceholderTextColor}
                 keyboardType="phone-pad"
                 maxLength={SMS_CODE_LENGTH}
-                validationError={codeError}
+                validationErrorText={codeError}
                 onChangeText={(text) =>
                   processForm(null, null, null, null, text)
                 }
-                onEndEditing={() => setCodeError(!isCodeValid)}
+                onEndEditing={() =>
+                  setCodeError(isCodeValid ? "" : t.ValidationError.InvalidCode)
+                }
               />
 
               <Button

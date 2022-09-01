@@ -20,6 +20,10 @@ Login:
     - Нет аккаунта?
     - Зарегистрируйтесь.
 
+  ValidationError:
+    InvalidPhoneOrName: Невалидный телефон или имя пользователя
+    InvalidPassword: Невалидный пароль
+
   Error:
     INVALID_CREDENTIALS: Неверное имя пользователя или пароль
 
@@ -42,6 +46,11 @@ RestorePassword:
     Password: Новый пароль
     PasswordAgain: Повторите пароль
     Button: Далее
+
+  ValidationError:
+    InvalidCode: Длина кода должна быть 4 символа
+    InvalidPhone: Невалидный номер телефона
+    InvalidPassword: Невалидный пароль
 
   Error:
     INVALID_PHONE_NUMBER: Пожалуйста, проверьте введённый номер телефона
@@ -66,6 +75,12 @@ Register:
     SubText: Мы отправили одноразовый код на ваш номер телефона. Введите его в поле ниже.
     Code: Код из SMS
     Button: Далее
+
+  ValidationError:
+    InvalidCode: Длина кода должна быть 4 символа
+    InvalidName: Невалиднoe имя пользователя
+    InvalidPhone: Невалидный номер телефона
+    InvalidPassword: Невалидный пароль
 
   Error:
     PASSWORDS_DONT_MATCH: Пароли не совпадают
@@ -106,6 +121,9 @@ ProfileEditScreen:
   Username: Имя пользователя
   Bio: О себе
   BioPlaceholder: Напишите что-нибудь...
+
+  ValidationError:
+    InvalidPhoneOrName: Невалидный телефон или имя пользователя
 
   Error:
     INVALID_USERNAME: Пожалуйста, укажите корректное имя пользователя
