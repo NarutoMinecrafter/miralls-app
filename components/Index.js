@@ -56,8 +56,7 @@ export default function Index() {
 
       // Токена нет или невалиден - экран авторизации
       else {
-        setInitialRouteName(Navigation.TabNavigation);
-        // setInitialRouteName(Navigation.Login)
+        setInitialRouteName(Navigation.Login);
       }
     }
 
