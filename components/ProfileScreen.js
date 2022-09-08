@@ -29,7 +29,7 @@ export default function ProfileScreen({ navigation }) {
 
   // Хук для пользовательских данных
   const [me, _setMe] = React.useState(Store.getState().userReducer);
-  const [userPicture, setUserPicture] = React.useState(me.picture);
+  const [userPicture, setUserPicture] = React.useState();
   const [userPosts, _setUserPosts] = React.useState(null);
 
   React.useEffect(() => {
@@ -39,7 +39,7 @@ export default function ProfileScreen({ navigation }) {
     function setMe() {
       if (isMounted) {
         _setMe(Store.getState().userReducer);
-        setUserPicture(me.picture);
+        // setUserPicture(me.picture);
         // console.log(userPicture)
       }
     }

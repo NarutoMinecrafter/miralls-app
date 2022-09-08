@@ -36,6 +36,7 @@
     "react-native": "0.69.5",
     "react-native-alert-notification": "^0.1.13",
     "react-native-animated-spinkit": "^1.5.2",
+    "react-native-bidirectional-infinite-scroll": "^0.3.3",
     "react-native-double-click": "^1.0.5",
     "react-native-gesture-handler": "~2.5.0",
     "react-native-modal": "^12.1.0",

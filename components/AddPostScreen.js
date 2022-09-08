@@ -28,6 +28,8 @@ import { manipulateAsync } from "expo-image-manipulator";
 import RoundButtonWithIcon from "./RoundButtonWithIcon";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { getPostPictureURL } from "./utils/post";
+import { secondsToMinutesSeconds } from "./utils";
+import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
 const ScreenType = {
   SelectMedia: 0,
@@ -42,26 +44,23 @@ export default function EditProfileScreen({ navigation }) {
 
   const [persmissionGranted, setPermissionsGranted] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState(null);
-  const [images, setImages] = React.useState(null);
+  const [images, setImages] = React.useState([]);
 
   async function loadImages() {
     MediaLibrary.getAssetsAsync({
-      first: NEW_POST_LOAD_IMAGES_COUNT,
-      mediaType: [
-        MediaLibrary.MediaType.photo,
-        // MediaLibrary.MediaType.video
-      ],
+      // first: NEW_POST_LOAD_IMAGES_COUNT,
+      after: images.length.toString(),
+      mediaType: [MediaLibrary.MediaType.photo, MediaLibrary.MediaType.video],
       sortBy: "creationTime",
     }).then((r) => {
       // Убираем thumbnails
-      var assets = [];
+      let assets = [];
       r.assets.forEach((e, i) => {
         if (!e.uri.includes("thumbnail")) {
           assets.push(e);
         }
       });
-      assets = assets.slice(0, 9);
-      setImages(assets);
+      setImages((prevImages) => [...prevImages, ...assets]);
       if (assets.length > 0) setSelectedImage(assets[0].uri);
     });
   }
@@ -91,8 +90,7 @@ export default function EditProfileScreen({ navigation }) {
 
     const unsubscribe = navigation.addListener("focus", () => {
       isMounted = false;
-      setImages(null);
-      console.log("focused");
+      setImages([]);
       setScreen(ScreenType.SelectMedia);
       loadImages();
     });
@@ -132,7 +130,6 @@ export default function EditProfileScreen({ navigation }) {
         type: ALERT_TYPE.SUCCESS,
         title: _("Success"),
       });
-      console.log(json);
       navigation.navigate("PostScreen", {
         me: me,
 
@@ -197,62 +194,59 @@ export default function EditProfileScreen({ navigation }) {
                   />
                 </View>
                 <View style={s.Row.Element}>
-                  {/* <RoundButtonWithIcon
-                                    wrapperStyle={s.Row.RightButton}
-                                    icon={() => (<Feather
-                                        name="image"
-                                        size={16}
-                                        color={Colors.Primary}
-                                    />)}
-                                    buttonSize={32}
-                                    onPress={() => alert('Open gallery')}
-                                />
-                                <RoundButtonWithIcon
-                                    wrapperStyle={s.Row.RightButton}
-                                    icon={() => (<Feather
-                                        name="camera"
-                                        size={16}
-                                        color={Colors.Primary}
-                                    />)}
-                                    buttonSize={32}
-                                    onPress={() => alert('Open camera')}
-                                /> */}
+                  <RoundButtonWithIcon
+                    wrapperStyle={s.Row.RightButton}
+                    icon={() => (
+                      <Feather name="image" size={16} color={Colors.Primary} />
+                    )}
+                    buttonSize={32}
+                    onPress={() => alert("Open gallery")}
+                  />
+                  <RoundButtonWithIcon
+                    wrapperStyle={s.Row.RightButton}
+                    icon={() => (
+                      <Feather name="camera" size={16} color={Colors.Primary} />
+                    )}
+                    buttonSize={32}
+                    onPress={() => alert("Open camera")}
+                  />
                 </View>
               </View>
 
-              <ScrollView style={s.Images.Wrapper}>
-                <View style={s.Images.View}>
-                  {images.map((p, i) => {
-                    if (p.mediaType != "photo") {
-                      return;
-                    }
-                    return (
-                      <View
-                        style={s.Image.View}
-                        onTouchEnd={() => {
-                          setSelectedImage(p.uri);
-                        }}
-                        key={i}
-                      >
-                        <Image
-                          key={i}
-                          style={s.Image.Image}
-                          source={{ uri: p.uri }}
-                        />
-                      </View>
-                    );
-                  })}
-                </View>
-              </ScrollView>
+              <FlatList
+                style={s.Images.View}
+                data={images}
+                numColumns={4}
+                keyExtractor={(item) => item.id}
+                onEndReached={loadImages}
+                renderItem={({ item }) => {
+                  return (
+                    <View
+                      style={s.Image.View}
+                      onTouchEnd={() => {
+                        setSelectedImage(item.uri);
+                      }}
+                    >
+                      <Image style={s.Image.Image} source={{ uri: item.uri }} />
+                      <Text style={s.Image.Duration}>
+                        {item.duration
+                          ? secondsToMinutesSeconds(item.duration)
+                          : ""}
+                      </Text>
+                    </View>
+                  );
+                }}
+              />
 
               <View style={s.Fields}>
-                {/* <Input wrapperStyle={s.Input}
-                                // label={t.Description}
-                                placeholder={t.Description}
-                                value={description}
-                                placeholderTextColor={Colors.Input.PlaceholderTextColor}
-                                onChangeText={(text) => processForm(text)}
-                            /> */}
+                <Input
+                  wrapperStyle={s.Input}
+                  // label={t.Description}
+                  placeholder={t.Description}
+                  value={description}
+                  placeholderTextColor={Colors.Input.PlaceholderTextColor}
+                  onChangeText={(text) => processForm(text)}
+                />
               </View>
             </View>
           }
@@ -360,10 +354,16 @@ const s = {
     },
     View: {
       margin: 1,
+      position: "relative",
     },
     Image: {
       width: Math.trunc(screenDismensions.width) / 4 - 2,
       height: Math.trunc(screenDismensions.width) / 4 - 2,
+    },
+    Duration: {
+      position: "absolute",
+      right: 3,
+      bottom: 3,
     },
   },
   Other: {
