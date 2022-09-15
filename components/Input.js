@@ -19,7 +19,7 @@ export default function Input({
   onChangeText,
   onEndEditing,
   value,
-  multiline = true,
+  multiline = false,
   label,
   validationError = false,
   validationErrorText,
