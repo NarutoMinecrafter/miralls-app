@@ -115,7 +115,7 @@ export const Sizes = {
     FontSize: 16,
   },
   FeedHeader: {
-    Height: 64,
+    Height: 46,
   },
   Button: {
     BorderRadius: 10,
