@@ -27,6 +27,7 @@ import ArchiveScreen from "./ArchiveScreen";
 import SearchScreen from "./SearchScreen";
 import { Navigation } from "../constants";
 import DialogsScreen from "./DialogsScreen";
+import DialogScreen from "./DialogScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -98,6 +99,7 @@ export default function Index() {
         />
 
         <Stack.Screen name={Navigation.Dialogs} component={DialogsScreen} />
+        <Stack.Screen name={Navigation.Dialog} component={DialogScreen} />
 
         <Stack.Screen name={Navigation.Archive} component={ArchiveScreen} />
 

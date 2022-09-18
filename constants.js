@@ -16,6 +16,7 @@ export const Navigation = {
   Search: "SearchScreen",
 
   Dialogs: "DialogsScreen",
+  Dialog: "DialogScreen",
 
   TabNavigation: "TabNavigation",
 

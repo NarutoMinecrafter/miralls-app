@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native';
-import { Sizes, Colors } from '../constants'
+import { Sizes, Colors, Navigation } from '../constants'
 import _ from "./i18n";
 import Header from './Header';
 import UserPictureRounded from "./UserPictureRounded";
@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setPopupData } from '../redux/actions';
 import { Feather } from '@expo/vector-icons';
 
-export default function DialogsScreen(props) {
+export default function DialogsScreen({ navigation: { navigate } }) {
     const dispatch = useDispatch()
     const mockData = [
     { avatar: '', name: 'name', lastMessage: 'Message', date: '1тиж.', checked: false },
@@ -22,13 +22,13 @@ export default function DialogsScreen(props) {
         <View style={s.GlobalWrapper}>
             <View style={s.Content.Wrapper}>
               <Header
-                  title={'Dialogs'}
+                  title={'Dialogs'} // TODO: Locale,
                   backButton={true}
                   backButtonText={_("Back")}
                   wrapperStyle={{ marginBottom: 8, paddingHorizontal: 16 }}
                 />
                 <ScrollView style={s.Content.Messages}>
-                  {mockData.map(item => <Pressable style={s.Content.Message.Container} onLongPress={() => {
+                  {mockData.map(item => <Pressable style={s.Content.Message.Container} onPress={() => navigate(Navigation.Dialog)} onLongPress={() => {
                     dispatch(setPopupData({
                       showPopup: true,
                       rows: [{
@@ -42,12 +42,12 @@ export default function DialogsScreen(props) {
                       <View style={s.Content.Message.Avatar}>
                         <UserPictureRounded
                           uri={item.avatar}
-                          size={42}
+                          size={44}
                           borderWidth={1}
                         />
                       </View>
                       <View>
-                        <Text style={s.Content.Message.Text}>{item.name}</Text>
+                        <Text style={s.Content.Message.Name}>{item.name}</Text>
                         <View style={s.Content.Message}>
                           <Text style={s.Content.Message.Text}>{item.lastMessage}</Text>
                           <View style={s.Content.Message.Separator} />
@@ -89,16 +89,22 @@ const s = {
           alignItems: 'center',
         },
         Avatar: {
-          margin: 3
+          margin: 7
+        },
+        Name: {
+          color: Colors.White,
+          fontWeight: 'bold',
+          fontSize: 16
         },
         Text: {
-          color: Colors.White
+          color: Colors.White,
+          fontSize: 16
         },
         Date: {
           color: 'gray'
         },
         Checked: {
-          backgroundColor: 'lightskyblue',
+          backgroundColor: 'dodgerblue',
           width: 6,
           height: 6,
           borderRadius: 12,
