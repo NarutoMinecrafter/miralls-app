@@ -20,14 +20,14 @@ export default function DialogScreen(props) {
     const dispatch = useDispatch()
     const [value, setValue] = useState('')
     const [data, setData] = useState({
-      '19 СЕРП., 23:00': [
-        { text: 'Яка ціна?', me: true },
+      '19 СЕН., 23:00': [
+        { text: 'Какая цена?', me: true },
         { image: 'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg', me: false },
-        { text: '10375 грн за 1 диск', me: false },
+        { text: '10375 р за 1 диск', me: false },
       ],
-      '20 СЕРП., 20:55': [
-        { text: 'Червоного коліру немає?', me: true },
-        { text: 'Ні, червоні тільки в 17', me: false },
+      '20 СЕН., 20:55': [
+        { text: 'Красного цвета нет?', me: true },
+        { text: 'Нет, красные только в 17', me: false },
       ],
       })
 
@@ -62,7 +62,7 @@ export default function DialogScreen(props) {
                     <TextInput 
                       style={s.Content.Input}
                       placeholderTextColor={'gray'}
-                      placeholder='Напишіть повідомлення...' // TODO: Locale,
+                      placeholder='Введите сообщение...' // TODO: Locale,
                       value={value}
                       onTextInput={setValue}
                     />
@@ -96,7 +96,7 @@ const s = {
         padding: 10,
         borderRadius: 20,
         margin: 3,
-        fontSize: 15
+        fontSize: 17
       },
       Author: {
         backgroundColor: 'dodgerblue',
@@ -133,7 +133,7 @@ const s = {
       Input: {
         color: Colors.White,
         marginHorizontal: 5,
-        fontSize: 15
+        fontSize: 17
       }
     }
 }

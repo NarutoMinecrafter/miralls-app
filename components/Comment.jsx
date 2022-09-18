@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions, Pressable } from "react-native";
 import { Colors, DefaultColors, Navigation } from "../constants";
 import { AntDesign } from '@expo/vector-icons';
 import { numberToReadableStr } from "./utils";
 import I18n from "i18n-js";
+import { Feather } from '@expo/vector-icons';
 
 import { useDispatch } from 'react-redux';
 import { setPopupData } from '../redux/actions';
@@ -27,6 +28,7 @@ export default function Comment({
     likedByCurrentUser = false,
     likesCount = 0,
 }) {
+    const dispatch = useDispatch()
     const navigation = useNavigation()
 
     const [liked, setLiked] = React.useState(likedByCurrentUser)
@@ -71,7 +73,16 @@ export default function Comment({
     const t = _('Comment')
 
     return (
-        <View style={style.Comment.Wrapper}>
+        <Pressable style={style.Comment.Wrapper} onLongPress={() => {
+            dispatch(setPopupData({
+                showPopup: true,
+                rows: [                              {
+                    text: 'Delete', // TODO: Locale,
+                    iconComponent: Feather,
+                    iconName: 'trash-2'
+                  },]
+            }))
+        }}>
             <TouchableOpacity
                 style={style.Author.Wrapper}
                 onPress={() => {
@@ -114,7 +125,7 @@ export default function Comment({
                     </Text>
                 </View>
             </TouchableOpacity>
-        </View>
+        </Pressable>
     )
 }
 
