@@ -26,6 +26,7 @@ import PostScreen from "./PostScreen";
 import ArchiveScreen from "./ArchiveScreen";
 import SearchScreen from "./SearchScreen";
 import { Navigation } from "../constants";
+import DialogsScreen from "./DialogsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -95,6 +96,8 @@ export default function Index() {
           name={Navigation.EditProfile}
           component={EditProfileScreen}
         />
+
+        <Stack.Screen name={Navigation.Dialogs} component={DialogsScreen} />
 
         <Stack.Screen name={Navigation.Archive} component={ArchiveScreen} />
 
