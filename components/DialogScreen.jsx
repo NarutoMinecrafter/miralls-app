@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 import { setPopupData } from '../redux/actions';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { IconButton } from 'react-native-paper';
 import { Dimensions } from 'react-native';
 
 // import {
