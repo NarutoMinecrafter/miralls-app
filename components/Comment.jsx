@@ -40,6 +40,7 @@ export default function Comment({
     }
 
     async function doSomething(action) {
+        console.log({action})
         var result
 
         switch (action) {
@@ -50,14 +51,16 @@ export default function Comment({
                 break
 
             case Actions.DeleteComment:
-                // result = await APIRequest.delete('post/' + postId + 'comment/' + commentId + '/')
+                console.log({postId, commentId})
+                result = await APIRequest.delete('post/' + postId + 'comment/' + commentId + '/')
+                console.log('result', result)
 
-                // if (result && result.success) {
-                //     Toast.show({
-                //         type: ALERT_TYPE.SUCCESS,
-                //         title: _('Success'),
-                //     })
-                // }
+                if (result && result.success) {
+                    Toast.show({
+                        type: ALERT_TYPE.SUCCESS,
+                        title: _('Success'),
+                    })
+                }
 
                 break
 
@@ -79,7 +82,17 @@ export default function Comment({
                 rows: [                              {
                     text: 'Delete', // TODO: Locale,
                     iconComponent: Feather,
-                    iconName: 'trash-2'
+                    iconName: 'trash-2',
+                    onPress: async () => {
+                        result = await APIRequest.delete('post/' + postId + 'comment/' + commentId + '/')
+
+                        if (result && result.success) {
+                            Toast.show({
+                                type: ALERT_TYPE.SUCCESS,
+                                title: _('Success'),
+                            })
+                        }
+                    }
                   },]
             }))
         }}>

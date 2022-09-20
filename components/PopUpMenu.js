@@ -64,7 +64,7 @@ export default function PopUpMenu({ menuStyle, rowStyle }) {
 
   if (!showPopup) return null;
 
-  const listRows = rows.map((row, i) => (
+  const listRows = rows?.map((row, i) => (
     <View style={[style.Row, rowStyle]} key={i}>
       {row.iconComponent && row.iconName ? (
         <row.iconComponent
@@ -76,10 +76,10 @@ export default function PopUpMenu({ menuStyle, rowStyle }) {
       ) : null}
       <Text
         style={[style.RowElement, style.Text]}
-        onPress={() => {
+        onPress={async () => {
           close();
           if (row.onPress) {
-            row.onPress();
+            await row.onPress();
           }
 
           if (row.navigateTo) {
