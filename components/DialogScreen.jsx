@@ -11,6 +11,7 @@ import { setPopupData } from '../redux/actions';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
+import * as ImagePicker from "expo-image-picker";
 
 // import {
 //   IconButton,
@@ -30,6 +31,25 @@ export default function DialogScreen(props) {
         { text: 'Нет, красные только в 17', me: false },
       ],
       })
+
+      async function getImageFromGalery() {
+        // Запрашиваем разрешение на доступ к фотографиям
+        let permissionResult =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+        if (permissionResult.granted === false) {
+          Toast.show({
+            type: ALERT_TYPE.DANGER,
+            title: _("Error").Title,
+            textBody: _("Error").UNDEFINED,
+          });
+          return;
+        }
+    
+        // Выбор изображения
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        if (pickerResult.cancelled) return;
+      }
 
     return (
         <View style={s.GlobalWrapper}>
@@ -69,7 +89,7 @@ export default function DialogScreen(props) {
                   </View>
                   {value ? <Ionicons name='send' size={24} color={'dodgerblue'} onPress={() => Alert.alert('Send')} /> : <View style={s.Content.ImageInput}>
                     <Feather style={s.Content.ImageIcon} name='camera' size={24} color={Colors.White} />
-                    <Feather name='image' size={24} color={Colors.White} />
+                    <Feather name='image' size={24} color={Colors.White} onPress={getImageFromGalery} />
                   </View>}
                 </View>
           </View>

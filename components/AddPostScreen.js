@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, View, Dimensions, ScrollView, Text } from "react-native";
+import { Image, View, Dimensions, Platform, Text } from "react-native";
 import {
   Styles,
   Colors,
@@ -50,7 +50,10 @@ export default function EditProfileScreen({ navigation }) {
     MediaLibrary.getAssetsAsync({
       // first: NEW_POST_LOAD_IMAGES_COUNT,
       after: images.length.toString(),
-      mediaType: [MediaLibrary.MediaType.photo, MediaLibrary.MediaType.video],
+      mediaType:
+        Platform.OS === "android" && Platform.constants.Release < 11
+          ? [MediaLibrary.MediaType.photo]
+          : [MediaLibrary.MediaType.photo, MediaLibrary.MediaType.video],
       sortBy: "creationTime",
     }).then((r) => {
       // Убираем thumbnails
@@ -160,6 +163,27 @@ export default function EditProfileScreen({ navigation }) {
     }
   }
 
+  async function getImageFromGalery() {
+    // Запрашиваем разрешение на доступ к фотографиям
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      Toast.show({
+        type: ALERT_TYPE.DANGER,
+        title: _("Error").Title,
+        textBody: _("Error").UNDEFINED,
+      });
+      return;
+    }
+
+    // Выбор изображения
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    if (pickerResult.cancelled) return;
+
+    setSelectedImage(pickerResult.uri);
+  }
+
   if (!isFocused || images == null) {
     return <Preloader />;
   }
@@ -200,16 +224,16 @@ export default function EditProfileScreen({ navigation }) {
                       <Feather name="image" size={16} color={Colors.Primary} />
                     )}
                     buttonSize={32}
-                    onPress={() => alert("Open gallery")}
+                    onPress={getImageFromGalery}
                   />
-                  <RoundButtonWithIcon
+                  {/* <RoundButtonWithIcon
                     wrapperStyle={s.Row.RightButton}
                     icon={() => (
                       <Feather name="camera" size={16} color={Colors.Primary} />
                     )}
                     buttonSize={32}
                     onPress={() => alert("Open camera")}
-                  />
+                  /> */}
                 </View>
               </View>
 
