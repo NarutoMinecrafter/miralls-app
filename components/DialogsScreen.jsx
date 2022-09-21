@@ -84,6 +84,7 @@ const s = {
       },
       Messages: {
         width: '100%',
+        paddingHorizontal: 8,
       },
       Message: {
         flexDirection: 'row',
