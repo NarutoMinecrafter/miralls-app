@@ -115,7 +115,8 @@ export const Sizes = {
     FontSize: 16,
   },
   FeedHeader: {
-    Height: 46,
+    Height: 60,
+    LogoSize: 45,
   },
   Button: {
     BorderRadius: 10,

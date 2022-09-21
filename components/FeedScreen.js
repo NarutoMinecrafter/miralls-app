@@ -13,9 +13,9 @@ export default function FeedScreen({ navigation: { navigate } }) {
         <View style={s.Header.View}>
           <View style={s.Header.Element}>
             <Logo
-              wrapperStyle={{ height: Sizes.FeedHeader.Height }}
-              logoWidth={Sizes.FeedHeader.Height}
-              logoHeight={Sizes.FeedHeader.Height}
+              wrapperStyle={s.Header.LogoWrapper}
+              logoWidth={Sizes.FeedHeader.LogoSize}
+              logoHeight={Sizes.FeedHeader.LogoSiz}
             />
           </View>
           <View style={[s.Header.Element, s.RightMenu.View]}>
@@ -62,6 +62,9 @@ const s = {
       // borderColor: 'red',
     },
     Element: {},
+    LogoWrapper: {
+      height: Sizes.FeedHeader.Height,
+    },
   },
   RightMenu: {
     View: {
