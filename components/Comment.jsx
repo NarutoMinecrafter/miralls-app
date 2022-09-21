@@ -33,6 +33,8 @@ export default function Comment({
 
     const [liked, setLiked] = React.useState(likedByCurrentUser)
 
+    const t = _('Comment')
+
     const Actions = {
         SwitchLike: 0,
         DeleteComment: 1,
@@ -40,7 +42,6 @@ export default function Comment({
     }
 
     async function doSomething(action) {
-        console.log({action})
         var result
 
         switch (action) {
@@ -51,7 +52,6 @@ export default function Comment({
                 break
 
             case Actions.DeleteComment:
-                console.log({postId, commentId})
                 result = await APIRequest.delete('post/' + postId + 'comment/' + commentId + '/')
                 console.log('result', result)
 
@@ -73,14 +73,12 @@ export default function Comment({
         (likesCount > 0 || liked) && (
         (likesCount - (liked ? 0 : 1)) > (likedByCurrentUser ? 0 : -1))
 
-    const t = _('Comment')
-
     return (
         <Pressable style={style.Comment.Wrapper} onLongPress={() => {
             dispatch(setPopupData({
                 showPopup: true,
                 rows: [                              {
-                    text: 'Delete', // TODO: Locale,
+                    text: t.Delete,
                     iconComponent: Feather,
                     iconName: 'trash-2',
                     onPress: async () => {

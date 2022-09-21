@@ -142,6 +142,12 @@ AddPostScreen:
     INVALID_PICTURE: Пожалуйста, выберите другое фото
     DESCRIPTION_IS_TOO_LARGE: Подпись может содержать не более 500 символов
 
+DialogsScreen:
+  Title: Диалоги
+  DeleteDialog: Удалить диалог
+  EditMessage: Редактировать сообщение
+  Placeholder: Введите сообщение...
+
 Post:
   Menu:
     CommentsOff: Выключить комментарии
@@ -156,6 +162,7 @@ ReportReason:
 
 Comment:
   Placeholder: Напишите что-нибудь...
+  Delete: Удалить комментарий
 
 EmptyList: Тут пока ничего нет...
 

@@ -12,6 +12,7 @@ import { Feather } from '@expo/vector-icons';
 
 export default function DialogsScreen({ navigation: { navigate } }) {
     const dispatch = useDispatch()
+    const t = _('DialogsScreen')
     const mockData = [
     { avatar: '', name: 'name', lastMessage: 'Message', date: '1тиж.', checked: false },
     { avatar: '', name: 'name', lastMessage: 'Message', date: '1тиж.', checked: false },
@@ -22,7 +23,7 @@ export default function DialogsScreen({ navigation: { navigate } }) {
         <View style={s.GlobalWrapper}>
             <View style={s.Content.Wrapper}>
               <Header
-                  title={'Dialogs'} // TODO: Locale,
+                  title={t.Title}
                   backButton={true}
                   backButtonText={_("Back")}
                   wrapperStyle={{ marginBottom: 8, paddingHorizontal: 16 }}
@@ -32,7 +33,7 @@ export default function DialogsScreen({ navigation: { navigate } }) {
                     dispatch(setPopupData({
                       showPopup: true,
                       rows: [{
-                        text: 'Delete dialog', // TODO: Locale,
+                        text: t.DeleteDialog,
                         iconComponent: Feather,
                         iconName: 'trash-2'
                       },]

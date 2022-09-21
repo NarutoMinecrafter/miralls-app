@@ -20,6 +20,7 @@ import * as ImagePicker from "expo-image-picker";
 export default function DialogScreen(props) {
     const dispatch = useDispatch()
     const [value, setValue] = useState('')
+    const t = _('DialogsScreen')
     const [data, setData] = useState({
       '19 СЕН., 23:00': [
         { text: 'Какая цена?', me: true },
@@ -67,7 +68,7 @@ export default function DialogScreen(props) {
                     dispatch(setPopupData({
                       showPopup: true,
                       rows: [{
-                        text: 'Edit message', // TODO: Locale,
+                        text: t.EditMessage,
                         iconComponent: Feather,
                         iconName: 'edit'
                       },]
@@ -82,7 +83,7 @@ export default function DialogScreen(props) {
                     <TextInput 
                       style={s.Content.Input}
                       placeholderTextColor={'gray'}
-                      placeholder='Введите сообщение...' // TODO: Locale,
+                      placeholder={t.Placeholder}
                       value={value}
                       onTextInput={setValue}
                     />
