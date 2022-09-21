@@ -1,5 +1,12 @@
 import React from "react";
-import { Image, View, Dimensions, Platform, Text } from "react-native";
+import {
+  Image,
+  View,
+  Dimensions,
+  Platform,
+  FlatList,
+  Text,
+} from "react-native";
 import {
   Styles,
   Colors,
@@ -29,7 +36,6 @@ import RoundButtonWithIcon from "./RoundButtonWithIcon";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { getPostPictureURL } from "./utils/post";
 import { secondsToMinutesSeconds } from "./utils";
-import { FlatList } from "react-native-bidirectional-infinite-scroll";
 
 const ScreenType = {
   SelectMedia: 0,
@@ -262,7 +268,7 @@ export default function EditProfileScreen({ navigation }) {
                 }}
               />
 
-              <View style={s.Fields}>
+              {/* <View style={s.Fields}>
                 <Input
                   wrapperStyle={s.Input}
                   // label={t.Description}
@@ -271,7 +277,7 @@ export default function EditProfileScreen({ navigation }) {
                   placeholderTextColor={Colors.Input.PlaceholderTextColor}
                   onChangeText={(text) => processForm(text)}
                 />
-              </View>
+              </View> */}
             </View>
           }
         />

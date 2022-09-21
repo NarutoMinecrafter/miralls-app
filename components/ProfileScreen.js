@@ -3,6 +3,7 @@ import { Entypo, MaterialIcons, Feather } from "@expo/vector-icons";
 import {
   View,
   Text,
+  FlatList,
   Image,
   Dimensions,
   ScrollView,
@@ -30,7 +31,16 @@ export default function ProfileScreen({ navigation }) {
   // Хук для пользовательских данных
   const [me, _setMe] = React.useState(Store.getState().userReducer);
   const [userPicture, setUserPicture] = React.useState(me.picture);
-  const [userPosts, _setUserPosts] = React.useState(null);
+  const [userPosts, _setUserPosts] = React.useState([]);
+
+  // Загружаем посты
+  async function loadPosts() {
+    const _posts = await getPosts(userPosts.length, 20);
+    if (_posts) {
+      _setUserPosts((prevPosts) => [...prevPosts, ..._posts]);
+      dispatch(setPosts(userPosts));
+    }
+  }
 
   React.useEffect(() => {
     let isMounted = true;
@@ -53,16 +63,7 @@ export default function ProfileScreen({ navigation }) {
     }
     if (isMounted) Store.subscribe(setUserPosts);
 
-    // Загружаем посты
-    function loadPosts() {
-      getPosts(0, 20).then((_posts) => {
-        // console.log(_posts)
-        _setUserPosts(_posts);
-        dispatch(setPosts(_posts));
-      });
-    }
-
-    if (userPosts == null) {
+    if (!userPosts.length) {
       loadPosts();
     }
 
@@ -72,7 +73,7 @@ export default function ProfileScreen({ navigation }) {
     });
 
     return unsubscribe;
-  });
+  }, []);
 
   if (!me || userPosts == null) return <Preloader />;
 
@@ -80,10 +81,16 @@ export default function ProfileScreen({ navigation }) {
   const t = _("ProfileScreen");
 
   return (
-    <DefaultScreen
-      content={
-        <View style={s.Wrapper}>
-          <ScrollView>
+    <DefaultScreen>
+      <View style={s.Wrapper}>
+        <FlatList
+          style={s.List}
+          data={userPosts}
+          numColumns={3}
+          keyExtractor={(item) => item.id}
+          onEndReached={loadPosts}
+          ListEmptyComponent={EmptyList}
+          ListHeaderComponent={() => (
             <View style={s.Header}>
               <View style={[s.Row, s.Row.First]}>
                 <View style={s.Username.View}>
@@ -210,52 +217,42 @@ export default function ProfileScreen({ navigation }) {
                 />
               </View>
             </View>
-            {userPosts.length > 0 ? (
-              <View style={s.Posts.View}>
-                {userPosts.map((p, i) => {
-                  // console.log(getPostPictureURL(p.media))
-                  return (
-                    <TouchableOpacity
-                      key={i}
-                      onPress={() => {
-                        navigation.navigate("PostScreen", {
-                          me: me,
+          )}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("PostScreen", {
+                  me: me,
 
-                          authorId: me.id,
-                          authorUsername: me.username,
-                          authorPicture: userPicture,
+                  authorId: me.id,
+                  authorUsername: me.username,
+                  authorPicture: userPicture,
 
-                          postId: p.id,
-                          postMedia: getPostPictureURL(p.media),
-                          postDescription: p.description,
-                          likesCount: p.likes_count,
-                          postDate: p.date,
+                  postId: item.id,
+                  postMedia: getPostPictureURL(item.media),
+                  postDescription: item.description,
+                  likesCount: item.likes_count,
+                  postDate: item.date,
 
-                          archived: p.archived,
-                          commentsEnabled: p.comments_enabled,
+                  archived: item.archived,
+                  commentsEnabled: item.comments_enabled,
 
-                          commentsCount: p.comments_count,
-                          likedByCurrentUser: p.liked,
-                        });
-                      }}
-                    >
-                      <View style={s.Posts.Post.View}>
-                        <Image
-                          style={s.Posts.Post.Image}
-                          source={{ uri: getPostPictureURL(p.media) }}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
+                  commentsCount: item.comments_count,
+                  likedByCurrentUser: item.liked,
+                });
+              }}
+            >
+              <View style={s.Posts.Post.View}>
+                <Image
+                  style={s.Posts.Post.Image}
+                  source={{ uri: getPostPictureURL(item.media) }}
+                />
               </View>
-            ) : (
-              <EmptyList />
-            )}
-          </ScrollView>
-        </View>
-      }
-    />
+            </TouchableOpacity>
+          )}
+        />
+      </View>
+    </DefaultScreen>
   );
 }
 

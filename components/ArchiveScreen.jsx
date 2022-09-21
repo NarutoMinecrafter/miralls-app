@@ -1,6 +1,6 @@
 import React from 'react'
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
-import { View, Text, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Dimensions, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { Sizes, Colors, Styles, Navigation } from '../constants'
 import DefaultScreen from './DefaultScreen';
 import Preloader from './Preloader';
@@ -21,7 +21,13 @@ export default function ArchiveScreen({
 
     // Хук для пользовательских данных
     const [me, _setMe] = React.useState(Store.getState().userReducer)
-    const [posts, setPosts] = React.useState(null)
+    const [posts, setPosts] = React.useState([])
+
+    // Загружаем посты
+    async function loadPosts() {
+        const _posts = await getPosts(posts.length, 20, true)
+        setPosts(_posts)
+    }
 
     React.useEffect(() => {
         let isMounted = true;
@@ -34,15 +40,7 @@ export default function ArchiveScreen({
         }
         Store.subscribe(setMe)
 
-        // Загружаем посты
-        function loadPosts() {
-            getPosts(0, 20, true).then(_posts => {
-                // console.log(_posts)
-                setPosts(_posts)
-            })
-        }
-
-        if (posts == null) {
+        if (!posts.length) {
             loadPosts()
         }
 
@@ -70,55 +68,49 @@ export default function ArchiveScreen({
                 // }}
                 wrapperStyle={{paddingHorizontal: 24, marginBottom: 0}}
             />
-            <ScrollView style={s.Posts.ScrollView}>
-                {posts.length > 0 ? (
-                    <View style={s.Posts.View}>
+                    <FlatList
+          style={s.Posts.ScrollView}
+          data={posts}
+          numColumns={3}
+          keyExtractor={(item) => item.id}
+          onEndReached={loadPosts}
+          ListEmptyComponent={() => <View style={s.Posts.EmptyList}>
+          <EmptyList/>
+      </View>}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+            onPress={() => {
+                navigation.navigate(Navigation.Post, {
+                    me: me,
 
-                        {posts.map((p, i) => {
-                            // console.log(getPostPictureURL(p.media))
-                            return (
-                                <TouchableOpacity
-                                    key={i}
-                                    onPress={() => {
-                                        navigation.navigate(Navigation.Post, {
-                                            me: me,
+                    authorId: me.id,
+                    authorUsername: me.username,
+                    authorPicture: me.picture,
 
-                                            authorId: me.id,
-                                            authorUsername: me.username,
-                                            authorPicture: me.picture,
+                    postId: p.id,
+                    postMedia: getPostPictureURL(p.media),
+                    postDescription: p.description,
+                    likesCount: p.likes_count,
+                    postDate: p.date,
 
-                                            postId: p.id,
-                                            postMedia: getPostPictureURL(p.media),
-                                            postDescription: p.description,
-                                            likesCount: p.likes_count,
-                                            postDate: p.date,
+                    archived: p.archived,
+                    commentsEnabled: p.comments_enabled,
 
-                                            archived: p.archived,
-                                            commentsEnabled: p.comments_enabled,
+                    commentsCount: p.comments_count,
+                    likedByCurrentUser: p.liked,
+                })
+            }}
+        >
 
-                                            commentsCount: p.comments_count,
-                                            likedByCurrentUser: p.liked,
-                                        })
-                                    }}
-                                >
-
-                                    <View style={s.Posts.Post.View}>
-                                        <Image
-                                            style={s.Posts.Post.Image}
-                                            source={{ uri: getPostPictureURL(p.media) }}
-                                        />
-                                    </View>
-                                </TouchableOpacity>
-                            )
-                        })}
-
-                    </View>
-                ) : (
-                    <View style={s.Posts.EmptyList}>
-                        <EmptyList/>
-                    </View>
-                )}
-            </ScrollView>
+            <View style={s.Posts.Post.View}>
+                <Image
+                    style={s.Posts.Post.Image}
+                    source={{ uri: getPostPictureURL(p.media) }}
+                />
+            </View>
+        </TouchableOpacity>
+          )}
+        />
         </View>
     )
 }
