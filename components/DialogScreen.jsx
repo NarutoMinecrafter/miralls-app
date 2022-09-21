@@ -149,7 +149,7 @@ const s = {
         marginTop: 8,
       },
       ImageIcon: {
-        marginRight: 5,
+        marginRight: 8,
       },
       ImageInput: {
         flexDirection: 'row',
