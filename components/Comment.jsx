@@ -82,7 +82,7 @@ export default function Comment({
                     iconComponent: Feather,
                     iconName: 'trash-2',
                     onPress: async () => {
-                        result = await APIRequest.delete('post/' + postId + 'comment/' + commentId + '/')
+                        const result = await APIRequest.delete('post/' + postId + '/comment/' + commentId + '/')
 
                         if (result && result.success) {
                             Toast.show({
