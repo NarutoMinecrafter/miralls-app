@@ -15,7 +15,7 @@ export default function FeedScreen({ navigation: { navigate } }) {
             <Logo
               wrapperStyle={s.Header.LogoWrapper}
               logoWidth={Sizes.FeedHeader.LogoSize}
-              logoHeight={Sizes.FeedHeader.LogoSiz}
+              logoHeight={Sizes.FeedHeader.LogoSize}
             />
           </View>
           <View style={[s.Header.Element, s.RightMenu.View]}>
