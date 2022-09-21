@@ -240,27 +240,35 @@ export default function Post({
                                 size={28}
                                 color={Colors.Primary}
                                 onPress={() => {
-                                    var rows = []
+                                    var rows
                                     if (me.id == authorId) {
-                                        rows.concat([{
+                                        rows = [{
                                             text: isCommentsEnabled ?
                                                 t.Menu.CommentsOff :
                                                 t.Menu.CommentsOn,
+                                            iconComponent: Feather,
+                                            iconName: 'message-circle',
                                             onPress: () => doSomething(Actions.SwitchCommentsEnabled),
                                         }, {
                                             text: isArchived ?
                                                 t.Menu.ReturnFromArchive :
                                                 t.Menu.AddToArchive,
+                                            iconComponent: Feather,
+                                            iconName: "archive",
                                             onPress: () => doSomething(Actions.SwitchArchive),
                                         }, {
                                             text: t.Menu.Delete,
+                                            iconComponent: Feather,
+                                            iconName: 'trash-2',
                                             onPress: () => doSomething(Actions.DeletePost),
-                                        }])
+                                        }]
                                     } else {
-                                        rows.concat([{
+                                        rows = [{
                                             text: t.Menu.Report,
+                                            iconComponent: Feather,
+                                            iconName: 'flag',
                                             onPress: () => showReportMenu,
-                                        }])
+                                        }]
                                     }
                                     dispatch(setPopupData({
                                         showPopup: true,
