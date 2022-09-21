@@ -50,7 +50,11 @@ export default function DialogsScreen({ navigation: { navigate } }) {
                       <View>
                         <Text style={s.Content.Message.Name}>{item.name}</Text>
                         <View style={s.Content.Message}>
-                          <Text style={s.Content.Message.Text}>{item.lastMessage}</Text>
+
+                          <Text style={[
+                            s.Content.Message.Text,
+                            item.checked ? s.Content.Message.CheckedMessageText : null
+                          ]}>{item.lastMessage}</Text>
                           <View style={s.Content.Message.Separator} />
                           <Text  style={s.Content.Message.Date}>{item.date}</Text>
                         </View>
@@ -90,7 +94,8 @@ const s = {
           alignItems: 'center',
         },
         Avatar: {
-          margin: 7
+          margin: 7,
+          marginRight: 12,
         },
         Name: {
           color: Colors.White,
@@ -100,6 +105,9 @@ const s = {
         Text: {
           color: Colors.White,
           fontSize: 16
+        },
+        CheckedMessageText: {
+          color: 'gray',
         },
         Date: {
           color: 'gray'
@@ -116,7 +124,7 @@ const s = {
           width: 3,
           height: 3,
           borderRadius: 6,
-          marginHorizontal: 4
+          marginHorizontal: 5
         }
       }
     }

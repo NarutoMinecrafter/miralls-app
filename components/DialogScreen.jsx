@@ -37,7 +37,7 @@ export default function DialogScreen(props) {
         // Запрашиваем разрешение на доступ к фотографиям
         let permissionResult =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
+
         if (permissionResult.granted === false) {
           Toast.show({
             type: ALERT_TYPE.DANGER,
@@ -46,7 +46,7 @@ export default function DialogScreen(props) {
           });
           return;
         }
-    
+
         // Выбор изображения
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
         if (pickerResult.cancelled) return;
@@ -80,7 +80,7 @@ export default function DialogScreen(props) {
                 </ScrollView>
                 <View style={s.Content.InputContainer}>
                   <View style={s.Content.ImageInput}>
-                    <TextInput 
+                    <TextInput
                       style={s.Content.Input}
                       placeholderTextColor={'gray'}
                       placeholder={t.Placeholder}
@@ -98,6 +98,7 @@ export default function DialogScreen(props) {
     )
 }
 
+const messagesMarginVertical = 4
 const s = {
     GlobalWrapper: {
 		height: '100%',
@@ -107,6 +108,7 @@ const s = {
   },
     Content: {
       Messages: {
+        paddingHorizontal: 8,
         width: '100%',
         maxHeight: Dimensions.get('window').height - Sizes.Header.Height - 90,
       },
@@ -116,7 +118,7 @@ const s = {
         alignSelf: 'flex-start',
         padding: 10,
         borderRadius: 20,
-        margin: 3,
+        marginVertical: messagesMarginVertical,
         fontSize: 17
       },
       Author: {
@@ -129,8 +131,9 @@ const s = {
         margin: 10
       },
       Image: {
+        marginVertical: messagesMarginVertical,
         width: 300,
-		  height: 200,
+		    height: 200,
         borderRadius: 20
       },
       InputContainer: {
@@ -139,10 +142,11 @@ const s = {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderRadius: 20,
+        // borderRadius: 20,
         padding: 5,
         paddingRight: 10,
-        marginTop: 5
+        height: Sizes.CommentInput.Height,
+        marginTop: 8,
       },
       ImageIcon: {
         marginRight: 5,
