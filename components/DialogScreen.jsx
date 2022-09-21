@@ -119,7 +119,7 @@ const s = {
         padding: 10,
         borderRadius: 20,
         marginVertical: messagesMarginVertical,
-        fontSize: 17
+        fontSize: 15
       },
       Author: {
         backgroundColor: 'dodgerblue',
@@ -142,10 +142,10 @@ const s = {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        // borderRadius: 20,
+        borderRadius: 20,
         padding: 5,
         paddingRight: 10,
-        height: Sizes.CommentInput.Height,
+        height: 40,
         marginTop: 8,
       },
       ImageIcon: {
@@ -158,7 +158,7 @@ const s = {
       Input: {
         color: Colors.White,
         marginHorizontal: 5,
-        fontSize: 17
+        fontSize: 15
       }
     }
 }

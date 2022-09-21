@@ -40,6 +40,7 @@ export default function ProfileScreen({ navigation }) {
       _setUserPosts((prevPosts) => [...prevPosts, ..._posts]);
       dispatch(setPosts(userPosts));
     }
+    console.log(_posts.length)
   }
 
   React.useEffect(() => {
