@@ -6,7 +6,6 @@ import {
   FlatList,
   Image,
   Dimensions,
-  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import { Sizes, Colors, Styles } from "../constants";
@@ -40,7 +39,6 @@ export default function ProfileScreen({ navigation }) {
       _setUserPosts((prevPosts) => [...prevPosts, ..._posts]);
       dispatch(setPosts(userPosts));
     }
-    console.log(_posts.length)
   }
 
   React.useEffect(() => {
@@ -85,7 +83,6 @@ export default function ProfileScreen({ navigation }) {
     <DefaultScreen>
       <View style={s.Wrapper}>
         <FlatList
-          style={s.List}
           data={userPosts}
           numColumns={3}
           keyExtractor={(item) => item.id}
@@ -275,7 +272,6 @@ const s = {
     },
   },
   Bio: {
-    View: {},
     Name: {
       Text: {
         color: Colors.Primary,

@@ -1,9 +1,8 @@
 import React from 'react'
-import { View, Text, Image, TextInput, Alert } from 'react-native';
+import { View, Text, Image, TextInput, Alert, Keyboard } from 'react-native';
 import { Sizes, Colors } from '../constants'
 import _ from "./i18n";
 import Header from './Header';
-import UserPictureRounded from "./UserPictureRounded";
 import { ScrollView } from 'react-native-gesture-handler';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import { useDispatch } from 'react-redux';
@@ -12,14 +11,12 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import * as ImagePicker from "expo-image-picker";
+import { useEffect } from 'react';
 
-// import {
-//   IconButton,
-// } from "@react-native-material/core";
-
-export default function DialogScreen(props) {
+export default function DialogScreen() {
     const dispatch = useDispatch()
     const [value, setValue] = useState('')
+    const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
     const t = _('DialogsScreen')
     const [data, setData] = useState({
       '19 СЕН., 23:00': [
@@ -32,6 +29,12 @@ export default function DialogScreen(props) {
         { text: 'Нет, красные только в 17', me: false },
       ],
       })
+
+      useEffect(() => {
+        Keyboard.addListener('keyboardDidShow', () => setIsKeyboardOpen(true))
+        Keyboard.addListener('keyboardDidHide', () => setIsKeyboardOpen(false))
+        return () => Keyboard.removeAllListeners()
+      }, [])
 
       async function getImageFromGalery() {
         // Запрашиваем разрешение на доступ к фотографиям
@@ -82,14 +85,21 @@ export default function DialogScreen(props) {
                   <View style={s.Content.ImageInput}>
                     <TextInput
                       style={s.Content.Input}
-                      placeholderTextColor={'gray'}
+                      placeholderTextColor='gray'
+                      c
                       placeholder={t.Placeholder}
                       value={value}
-                      onTextInput={setValue}
+                      onChangeText={setValue}
+                      onSelectionChange={e => {
+                        if (!isKeyboardOpen) {
+                          e.currentTarget.blur()
+                          e.currentTarget.focus()
+                        }
+                      }}
                     />
                   </View>
                   {value ? <Ionicons name='send' size={24} color={'dodgerblue'} onPress={() => Alert.alert('Send')} /> : <View style={s.Content.ImageInput}>
-                    <Feather style={s.Content.ImageIcon} name='camera' size={24} color={Colors.White} />
+                    {/* <Feather style={s.Content.ImageIcon} name='camera' size={24} color={Colors.White} /> */}
                     <Feather name='image' size={24} color={Colors.White} onPress={getImageFromGalery} />
                   </View>}
                 </View>
@@ -105,11 +115,14 @@ const s = {
 		width: '100%',
     backgroundColor: Colors.BG,
     justifyContent: 'space-between',
+    position: "relative",
   },
     Content: {
       Messages: {
         paddingHorizontal: 8,
         width: '100%',
+        position: 'absolute',
+        bottom: 50,
         maxHeight: Dimensions.get('window').height - Sizes.Header.Height - 90,
       },
       Text: {
@@ -136,18 +149,6 @@ const s = {
 		    height: 200,
         borderRadius: 20
       },
-      InputContainer: {
-        backgroundColor: '#222',
-		    width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderRadius: 20,
-        padding: 5,
-        paddingRight: 10,
-        height: 40,
-        marginTop: 8,
-      },
       ImageIcon: {
         marginRight: 8,
       },
@@ -155,9 +156,24 @@ const s = {
         flexDirection: 'row',
         alignItems: 'center',
       },
+      InputContainer: {
+        backgroundColor: '#222',
+		    width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        justifyContent: 'space-between',
+        bottom: 0,
+        borderRadius: 20,
+        paddingRight: 10,
+        height: 40,
+        marginTop: 8,
+      },
       Input: {
         color: Colors.White,
-        marginHorizontal: 5,
+        width: Dimensions.get('window').width - 30,
+        height: 40,
+        paddingHorizontal: 5,
         fontSize: 15
       }
     }

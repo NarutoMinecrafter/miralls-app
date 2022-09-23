@@ -1,13 +1,10 @@
 import React from 'react'
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
-import { View, Text, Image, Dimensions, FlatList, ScrollView, TouchableOpacity } from 'react-native';
-import { Sizes, Colors, Styles, Navigation } from '../constants'
-import DefaultScreen from './DefaultScreen';
+import { View, Image, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import { Colors, Navigation } from '../constants'
 import Preloader from './Preloader';
 import _ from './i18n';
 
 import { Store } from '../redux/store';
-import { useDispatch } from 'react-redux';
 import { getPostPictureURL, getPosts } from './utils/post';
 
 import Header from './Header.js';
@@ -17,7 +14,6 @@ import EmptyList from './EmptyList';
 export default function ArchiveScreen({
     navigation
 }) {
-    const dispatch = useDispatch()
 
     // Хук для пользовательских данных
     const [me, _setMe] = React.useState(Store.getState().userReducer)
@@ -26,7 +22,7 @@ export default function ArchiveScreen({
     // Загружаем посты
     async function loadPosts() {
         const _posts = await getPosts(posts.length, 20, true)
-        setPosts(_posts)
+        setPosts((prevPosts) => [...prevPosts, ..._posts])
     }
 
     React.useEffect(() => {
@@ -69,7 +65,6 @@ export default function ArchiveScreen({
                 wrapperStyle={{paddingHorizontal: 24, marginBottom: 0}}
             />
                     <FlatList
-          style={s.Posts.ScrollView}
           data={posts}
           numColumns={3}
           keyExtractor={(item) => item.id}
@@ -87,17 +82,17 @@ export default function ArchiveScreen({
                     authorUsername: me.username,
                     authorPicture: me.picture,
 
-                    postId: p.id,
-                    postMedia: getPostPictureURL(p.media),
-                    postDescription: p.description,
-                    likesCount: p.likes_count,
-                    postDate: p.date,
+                    postId: item.id,
+                    postMedia: getPostPictureURL(item.media),
+                    postDescription: item.description,
+                    likesCount: item.likes_count,
+                    postDate: item.date,
 
-                    archived: p.archived,
-                    commentsEnabled: p.comments_enabled,
+                    archived: item.archived,
+                    commentsEnabled: item.comments_enabled,
 
-                    commentsCount: p.comments_count,
-                    likedByCurrentUser: p.liked,
+                    commentsCount: item.comments_count,
+                    likedByCurrentUser: item.liked,
                 })
             }}
         >
@@ -105,7 +100,7 @@ export default function ArchiveScreen({
             <View style={s.Posts.Post.View}>
                 <Image
                     style={s.Posts.Post.Image}
-                    source={{ uri: getPostPictureURL(p.media) }}
+                    source={{ uri: getPostPictureURL(item.media) }}
                 />
             </View>
         </TouchableOpacity>
@@ -125,13 +120,6 @@ const s = {
         backgroundColor: Colors.BG,
     },
     Posts: {
-        ScrollView: {
-            width: '100%',
-            height: '100%',
-            minHeight: '100%',
-            // borderWidth: 1,
-            // borderColor: 'red',
-        },
         View: {
             // marginTop: 8,
             width: '100%',

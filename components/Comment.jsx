@@ -27,6 +27,8 @@ export default function Comment({
 
     likedByCurrentUser = false,
     likesCount = 0,
+
+    setComments
 }) {
     const dispatch = useDispatch()
     const navigation = useNavigation()
@@ -83,6 +85,7 @@ export default function Comment({
                     iconName: 'trash-2',
                     onPress: async () => {
                         const result = await APIRequest.delete('post/' + postId + '/comment/' + commentId + '/')
+                        setComments(prevComments => prevComments.filter(comment => comment.id !== commentId))
 
                         if (result && result.success) {
                             Toast.show({
