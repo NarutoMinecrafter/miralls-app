@@ -85,7 +85,7 @@ export default function EditProfileScreen({ navigation }) {
       }
     });
 
-    if (images == null && persmissionGranted) {
+    if (!images.length && persmissionGranted) {
       loadImages();
     }
 
@@ -101,7 +101,6 @@ export default function EditProfileScreen({ navigation }) {
       isMounted = false;
       setImages([]);
       setScreen(ScreenType.SelectMedia);
-      loadImages();
     });
 
     return unsubscribe;
