@@ -148,6 +148,10 @@ DialogsScreen:
   EditMessage: Редактировать сообщение
   Placeholder: Введите сообщение...
 
+Subscriptions:
+  Title: Платные подписки
+  Button: Улучшить
+
 Post:
   Menu:
     CommentsOff: Выключить комментарии
