@@ -7,7 +7,6 @@ import FeedScreen from "./FeedScreen";
 import AddPostScreen from "./AddPostScreen";
 import NotificationsScreen from "./NotificationsScreen";
 import ProfileScreen from "./ProfileScreen";
-import Subscriptions from "./Subscriptions";
 import Preloader from "./Preloader";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -53,7 +52,7 @@ export default function TabNavigation({ navigation }) {
 
       <Tab.Screen
         name={Navigation.Tabs.Profile}
-        component={Subscriptions}
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Octicons name="person" color={color} size={26} />
