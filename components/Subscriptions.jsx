@@ -10,30 +10,21 @@ export default function Subscriptions({ navigation: { navigate } }) {
     const data = [
       {
         title: 'PRO 1 YEAR',
-        price: '149.99',
-        descriptionTitle: 'Все преимущества PRO:',
-        description: `\u2022 Ежедневный лимит лайков поднят до 30 шт
-\u2022 Лимит публикаций поднят до 30 шт на месяц
-\u2022 Большая вероятность попадания публикаций в рекомендации
-\u2022 Обработка вывода средств до 24-х часов`
+        price: '149,99',
+        descriptionTitle: t.DescriptionTitle,
+        description: t.Description
       },
       {
         title: 'PRO 1 MONTH',
-        price: '15.99',
-        descriptionTitle: 'Все преимущества PRO:',
-        description: `\u2022 Ежедневный лимит лайков поднят до 30 шт
-\u2022 Лимит публикаций поднят до 30 шт на месяц
-\u2022 Большая вероятность попадания публикаций в рекомендации
-\u2022 Обработка вывода средств до 24-х часов`
+        price: '15,99',
+        descriptionTitle: t.DescriptionTitle,
+        description: t.Description
       },
       {
         title: 'PRO 3 MONTHS ',
-        price: '39.99',
-        descriptionTitle: 'Все преимущества PRO:',
-        description: `\u2022 Ежедневный лимит лайков поднят до 30 шт
-\u2022 Лимит публикаций поднят до 30 шт на месяц
-\u2022 Большая вероятность попадания публикаций в рекомендации
-\u2022 Обработка вывода средств до 24-х часов`
+        price: '39,99',
+        descriptionTitle: t.DescriptionTitle,
+        description: t.Description
       },
     ]
 
@@ -46,21 +37,23 @@ export default function Subscriptions({ navigation: { navigate } }) {
                   backButtonText={_("Back")}
                   wrapperStyle={{ marginBottom: 8, paddingHorizontal: 16 }}
                 />
+                <ScrollView horizontal contentOffset={{ x: 420 }} style={s.Content.Carousel} contentContainerStyle={s.Content.CarouselContainer}>
+                {data.map(item => <View style={s.Content.Item}>
+                  <Text style={[s.Content.Text, s.Content.Title, s.Content.Price]}>{item.title}</Text>
+                  <View style={s.Content.Price}>
+                    <Text style={[s.Content.Text, s.Content.PriceUSD]}>USD </Text>
+                    <Text style={[s.Content.Text, s.Content.PriceText]}>{item.price}</Text>
+                    <Text style={[s.Content.SubText, s.Content.PriceMonth]}> /{t.Month}</Text>
+                  </View>
+                  <Button title={t.Button} style={s.Content.Button} />
+                  <Text style={[s.Content.Text, s.Content.Title]}>{item.descriptionTitle}</Text>
+                  {t.Description.map(text => <Text style={[s.Content.Text, s.Content.Description]}>{text}</Text>)}
+                </View>)}
+              </ScrollView>
+              <View style={s.Content.Common}>
+                {t.Common.map(text => <Text style={s.Content.SubText}>{text}</Text>)}
+              </View>
             </View>
-            <ScrollView horizontal contentOffset={{ x: 420 }} style={s.Content.Carousel} contentContainerStyle={s.Content.CarouselContainer}>
-              {data.map(item => <View style={s.Content.Item}>
-                <Text style={[s.Content.Text, s.Content.Title, s.Content.Price]}>{item.title}</Text>
-                <Text style={[s.Content.Text, s.Content.Title, s.Content.Price]}>{item.price} $</Text>
-                <Button title={t.Button} variant="outlined" style={s.Content.Button} />
-                <Text style={[s.Content.Text, s.Content.Title]}>{item.descriptionTitle}</Text>
-                <Text style={[s.Content.Text, s.Content.Description]}>{item.description}</Text>
-              </View>)}
-            </ScrollView>
-            <Text style={[s.Content.Text, s.Content.CommonDescription]}>{`\u2022 Подписка будет действовать только на этом аккаунте не зависимо на каком устройстве он будет открыт.
-\u2022 Ваша подписка начнется, как только вы подтвердите покупку.
-\u2022 Все подписки продлеваюься автоматически, но вы можете отменить их до окончания вашего пробного периода или текущего расчётного периода.
-\u2022 Вы можете изменить тип подписки в Настройках (Меню - Настройки - Подписка). Отменить подписку можно только через настройки IOS (Настройки - Ваше имя - Подписки- Выбрать подписки - Отмпнить).
-\u2022 Может быть добавлен налог с продаж, в зависимости от вашего местоположения.`}</Text>
         </View>
     )
 }
@@ -73,11 +66,11 @@ const s = {
     },
     Content: {
       Wrapper: {
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 22,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
       },
       Carousel: {
         color: Colors.White,
@@ -85,7 +78,8 @@ const s = {
       CarouselContainer: {
         flexGrow: 1,
         justifyContent: 'center',
-        width: 1230
+        width: 1233,
+        // height: 350
       },
       Text: {
         color: Colors.White
@@ -95,16 +89,28 @@ const s = {
         padding: 10,
         borderRadius: 10,
         borderWidth: 1,
-          width: '25%',
-          borderColor: Colors.White,
+        width: '25%',
+        borderColor: Colors.SubText,
       },
       Title: {
         padding: 5,
         fontWeight: 'bold',
       },
       Price: {
-        fontSize: 20,
-        textAlign: 'center'
+        flexDirection:'row',
+        justifyContent: 'center'
+      },
+      PriceText: {
+        fontWeight: 'bold',
+        fontSize: 30
+      },
+      PriceUSD: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginTop: 5
+      },
+      PriceMonth: {
+        marginTop: 15
       },
       Button: {
         margin: 5,
@@ -112,7 +118,10 @@ const s = {
       Description: {
         paddingLeft: 15
       },
-      CommonDescription: {
+      SubText: {
+        color: Colors.SubText
+      },
+      Common: {
         padding: 20
       }
     }
