@@ -101,6 +101,8 @@ ProfileScreen:
   Buttons:
     EditProfile: Изменить
     Archive: Архив
+    Subscribe: Подписаться
+    Message: Сообщение
 
   Menu:
     Settings: Настройки

@@ -9,18 +9,16 @@ import {
 } from "react-native";
 import { Sizes, Colors } from "../constants";
 import DefaultScreen from "./DefaultScreen";
-import Preloader from "./Preloader";
 import _ from "./i18n";
 
 import { getPostPictureURL } from "./utils/post";
 import UserPictureRounded from "./UserPictureRounded";
 import { numberToReadableStr } from "./utils";
 import EmptyList from "./EmptyList";
+import { Entypo } from "@expo/vector-icons";
 
-export default function Profile({ profile, loadPosts, rightMenuIcons, actionButtons }) {
-  const {user, userPicture, userPosts } = profile
-
-  if (!user || userPosts == null) return <Preloader />;
+export default function Profile({ navigation, profile, loadPosts, rightMenuIcons, actionButtons, isProfile }) {
+  const { user, userPosts } = profile
 
   const t = _("ProfileScreen");
 
@@ -36,6 +34,7 @@ export default function Profile({ profile, loadPosts, rightMenuIcons, actionButt
           ListHeaderComponent={() => (
             <View style={s.Header}>
               <View style={[s.Row, s.Row.First]}>
+                {!isProfile && <Entypo name="back" color={Colors.White} size={24} onPress={() => navigation.goBack()} />}
                 <View style={s.Username.View}>
                   <Text style={s.Username.Text}>{user.username}</Text>
                 </View>
@@ -44,7 +43,7 @@ export default function Profile({ profile, loadPosts, rightMenuIcons, actionButt
                 </View>
               </View>
               <View style={s.Row}>
-                <UserPictureRounded uri={userPicture} size={80} />
+                <UserPictureRounded uri={user.picture} size={80} />
                 <View style={s.Stats.Wrapper}>
                   <View style={s.Stats.View}>
                     <Text style={s.Stats.Text1}>
@@ -92,7 +91,7 @@ export default function Profile({ profile, loadPosts, rightMenuIcons, actionButt
 
                   authorId: user.id,
                   authorUsername: user.username,
-                  authorPicture: userPicture,
+                  authorPicture: user.picture,
 
                   postId: item.id,
                   postMedia: getPostPictureURL(item.media),

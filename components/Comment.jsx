@@ -99,9 +99,7 @@ export default function Comment({
         }}>
             <TouchableOpacity
                 style={style.Author.Wrapper}
-                onPress={() => {
-                    alert('@' + authorUsername + ' (ID: ' + authorId + ')')
-                }}
+                onPress={() => navigation.navigate("UserScreen", { userId: authorId })}
             >
                 <Text style={style.Author.Username} >
                     {authorUsername}

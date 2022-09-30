@@ -19,7 +19,6 @@ export default function ProfileScreen({ navigation }) {
 
   // Хук для пользовательских данных
   const [me, _setMe] = React.useState(Store.getState().userReducer);
-  const [userPicture, setUserPicture] = React.useState(me.picture);
   const [userPosts, _setUserPosts] = React.useState([]);
 
   // Загружаем посты
@@ -38,8 +37,6 @@ export default function ProfileScreen({ navigation }) {
     function setMe() {
       if (isMounted) {
         _setMe(Store.getState().userReducer);
-        setUserPicture(me.picture);
-        // console.log(userPicture)
       }
     }
     if (isMounted) Store.subscribe(setMe);
@@ -71,8 +68,10 @@ export default function ProfileScreen({ navigation }) {
 
   return (
     <Profile
-      profile={{ user: me, userPicture, userPosts }}
+      profile={{ user: me, userPosts }}
       loadPosts={loadPosts}
+      navigation={navigation}
+      isProfile
       rightMenuIcons={
         <>
           <View style={s.RightMenu.Icon}>

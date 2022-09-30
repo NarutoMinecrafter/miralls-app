@@ -232,9 +232,9 @@ export default function Post({
         <View style={style.FirstRow.Wrapper}>
           <View style={style.Author.Wrapper}>
             <TouchableOpacity
-              onPress={() => {
-                alert("@" + authorUsername + " (ID: " + authorId + ")");
-              }}
+              onPress={() =>
+                navigation.navigate("UserScreen", { userId: authorId })
+              }
             >
               <View style={style.Author.View}>
                 <UserPictureRounded

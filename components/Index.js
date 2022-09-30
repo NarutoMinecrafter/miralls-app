@@ -28,6 +28,7 @@ import SearchScreen from "./SearchScreen";
 import { Navigation } from "../constants";
 import DialogsScreen from "./DialogsScreen";
 import DialogScreen from "./DialogScreen";
+import UserScreen from "./UserScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -97,6 +98,8 @@ export default function Index() {
           name={Navigation.EditProfile}
           component={EditProfileScreen}
         />
+
+        <Stack.Screen name={Navigation.User} component={UserScreen} />
 
         <Stack.Screen name={Navigation.Dialogs} component={DialogsScreen} />
         <Stack.Screen name={Navigation.Dialog} component={DialogScreen} />

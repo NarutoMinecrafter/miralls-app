@@ -14,6 +14,7 @@ export const Navigation = {
   Archive: "ArchiveScreen",
   Post: "PostScreen",
   Search: "SearchScreen",
+  User: "UserScreen",
 
   Dialogs: "DialogsScreen",
   Dialog: "DialogScreen",
