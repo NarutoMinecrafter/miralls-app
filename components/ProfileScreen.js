@@ -11,57 +11,42 @@ import { setPopupData, setPosts } from "../redux/actions";
 import { getPosts } from "./utils/post";
 import { Button } from "@react-native-material/core";
 
-import { logOut } from "./utils/user";
+import { getUserData, logOut } from "./utils/user";
 import Profile from "./Profile";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
 
   // Хук для пользовательских данных
   const [me, _setMe] = React.useState(Store.getState().userReducer);
-  const [userPosts, _setUserPosts] = React.useState([]);
+  const [userPosts, _setUserPosts] = React.useState(null);
+  const isFocused = useIsFocused();
 
   // Загружаем посты
   async function loadPosts() {
-    const _posts = await getPosts(userPosts.length, 20);
+    const _posts = await getPosts(userPosts?.length, 20);
     if (_posts) {
-      _setUserPosts((prevPosts) => [...prevPosts, ..._posts]);
-      dispatch(setPosts(userPosts));
+      _setUserPosts((prevPosts) =>
+        prevPosts ? [...prevPosts, ..._posts] : _posts
+      );
+    }
+  }
+
+  async function loadMe() {
+    const _me = await getUserData();
+    if (_me) {
+      _setMe(_me);
     }
   }
 
   React.useEffect(() => {
-    let isMounted = true;
+    _setUserPosts(null);
+    loadMe();
+    loadPosts();
+  }, [isFocused]);
 
-    // Подписываемся на актуальные данные на этом экране
-    function setMe() {
-      if (isMounted) {
-        _setMe(Store.getState().userReducer);
-      }
-    }
-    if (isMounted) Store.subscribe(setMe);
-
-    // Список постов
-    function setUserPosts() {
-      if (isMounted) {
-        _setUserPosts(Store.getState().postsReducer);
-      }
-    }
-    if (isMounted) Store.subscribe(setUserPosts);
-
-    if (!userPosts.length) {
-      loadPosts();
-    }
-
-    const unsubscribe = navigation.addListener("focus", () => {
-      isMounted = false;
-      // loadPosts()
-    });
-
-    return unsubscribe;
-  }, []);
-
-  if (!me || userPosts == null) return <Preloader />;
+  if (!me || userPosts === null) return <Preloader />;
 
   // Локализация
   const t = _("ProfileScreen");
