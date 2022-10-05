@@ -96,6 +96,7 @@ ChangePasswordScreen:
   Title: Изменить пароль
   OldPassword: Старый пароль
   NewPassword: Новый пароль
+  NewPasswordAgain: Повторите новый пароль
   ValidationError:
     InvalidPassword: Невалидный пароль
     PasswordsNotMatch: Пароли не совпадают

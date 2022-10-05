@@ -7,14 +7,19 @@ import Input from "./Input";
 import _ from "./i18n";
 import * as FieldsValidator from "./utils/fieldsValidator";
 import { useTogglePasswordVisibility } from "./hooks/useTogglePasswordVisibility";
+import { APIRequest } from "./utils/api";
+import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 
 export default function ChangePasswordScreen({ navigation }) {
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
+  const [newPasswordAgain, setNewPasswordAgain] = useState();
   const [oldPasswordError, setOldPasswordError] = useState(false);
   const [newPasswordError, setNewPasswordError] = useState(false);
+  const [newPasswordAgainError, setNewPasswordAgainError] = useState(false);
   const [oldPasswordEditing, setOldPasswordEditing] = useState(false);
   const [newPasswordEditing, setNewPasswordEditing] = useState(false);
+  const [newPasswordAgainEditing, setNewPasswordAgainEditing] = useState(false);
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
   useTogglePasswordVisibility();
   const t = _("ChangePasswordScreen");
@@ -22,11 +27,7 @@ export default function ChangePasswordScreen({ navigation }) {
   function checkOldPassword() {
     const isValid = FieldsValidator.isPasswordValid(oldPassword)
       if (isValid) {
-        if (oldPassword !== newPassword) {
-          setOldPasswordError(t.ValidationError.PasswordsNotMatch)
-        } else {
-          setOldPasswordError('')
-        }
+        setOldPasswordError('')
     } else {
       setOldPasswordError(t.ValidationError.InvalidPassword)
     }
@@ -35,13 +36,26 @@ export default function ChangePasswordScreen({ navigation }) {
   function checkNewPassword() {
     const isValid = FieldsValidator.isPasswordValid(newPassword)
     if (isValid) {
-      if (newPassword !== oldPassword) {
+      if (newPassword !== newPasswordAgain) {
         setNewPasswordError(t.ValidationError.PasswordsNotMatch)
       } else {
         setNewPasswordError('')
       }
     } else {
       setNewPasswordError(t.ValidationError.InvalidPassword)
+    }
+  }
+
+  function checkNewPasswordAgain() {
+    const isValid = FieldsValidator.isPasswordValid(newPasswordAgain)
+    if (isValid) {
+      if (newPasswordAgain !== newPassword) {
+        setNewPasswordAgainError(t.ValidationError.PasswordsNotMatch)
+      } else {
+        setNewPasswordAgainError('')
+      }
+    } else {
+      setNewPasswordAgainError(t.ValidationError.InvalidPassword)
     }
   }
 
@@ -52,10 +66,31 @@ export default function ChangePasswordScreen({ navigation }) {
     if (newPasswordEditing) {
       checkNewPassword()
     }
-  }, [oldPasswordEditing, newPasswordEditing, oldPassword, newPassword])
+    if (newPasswordAgainEditing) {
+      checkNewPasswordAgain()
+    }
+  }, [oldPasswordEditing, newPasswordEditing, newPasswordAgainEditing, oldPassword, newPassword, newPasswordAgain])
 
-  function ChangePassword() {
-    console.log('ChangePassword')
+  async function ChangePassword() {
+    const response = await APIRequest.post('changepassword', {
+      old_password: oldPassword,
+      new_password: newPassword,
+      new_password_again: newPasswordAgain
+    })
+
+    if (response && response.success) {
+      Toast.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: _("Success"),
+      });
+
+      navigation.goBack()
+    } else if (response.error_text){
+      Toast.show({
+        type: ALERT_TYPE.DANGER,
+        title: response.error_text || _('Error').SERVER_ERROR,
+      });
+    }
   }
 
   return (
@@ -80,11 +115,7 @@ export default function ChangePasswordScreen({ navigation }) {
                 validationErrorText={oldPasswordError}
                 onEndEditing={() => setOldPasswordEditing(true)}
                 passwordVisiblityButton
-                passwordVisibilityProps={passwordVisibility}
-                rightIconProps={rightIcon}
-                handlePasswordVisibilityProps={handlePasswordVisibility}
-                />
-
+              />
               <Input
                 wrapperStyle={s.Input}
                 label={t.NewPassword}
@@ -98,7 +129,21 @@ export default function ChangePasswordScreen({ navigation }) {
                 passwordVisibilityProps={passwordVisibility}
                 rightIconProps={rightIcon}
                 handlePasswordVisibilityProps={handlePasswordVisibility}
-                />
+              />
+              <Input
+                wrapperStyle={s.Input}
+                label={t.NewPasswordAgain}
+                placeholder={t.NewPasswordAgain}
+                value={newPasswordAgain}
+                placeholderTextColor={Colors.Input.PlaceholderTextColor}
+                onChangeText={setNewPasswordAgain}
+                validationErrorText={newPasswordAgainError}
+                onEndEditing={() => setNewPasswordAgainEditing(true)}
+                passwordVisiblityButton
+                passwordVisibilityProps={passwordVisibility}
+                rightIconProps={rightIcon}
+                handlePasswordVisibilityProps={handlePasswordVisibility}
+              />
             </View>
           </ScrollView>
         </View>
