@@ -21,7 +21,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "backgroundColor": "#000000",
       "supportsTablet": true
@@ -35,6 +37,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "08eb096f-18dc-48bf-b111-50441ff759d1"
+      }
     }
   }
 }
