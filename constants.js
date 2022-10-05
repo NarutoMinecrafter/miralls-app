@@ -12,6 +12,7 @@ export const Navigation = {
   RestorePassword: "RestorePasswordScreen",
   EditProfile: "EditProfileScreen",
   Archive: "ArchiveScreen",
+  ChangePassword: "ChangePasswordScreen",
   Post: "PostScreen",
   Search: "SearchScreen",
   User: "UserScreen",

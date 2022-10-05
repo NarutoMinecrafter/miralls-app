@@ -7,7 +7,7 @@ export function isUsernameValid(username) {
 }
 
 export function isPasswordValid(password) {
-  return true; // TODO
+  return Boolean(password); // TODO
   // return /^[A-Za-zА-Яа-яёЁ0-9_\-\!#*@\.]{8,32}$/.test(password)
 }
 

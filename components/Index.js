@@ -29,6 +29,7 @@ import { Navigation } from "../constants";
 import DialogsScreen from "./DialogsScreen";
 import DialogScreen from "./DialogScreen";
 import UserScreen from "./UserScreen";
+import ChangePasswordScreen from "./ChangePasswordScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -105,6 +106,11 @@ export default function Index() {
         <Stack.Screen name={Navigation.Dialog} component={DialogScreen} />
 
         <Stack.Screen name={Navigation.Archive} component={ArchiveScreen} />
+
+        <Stack.Screen
+          name={Navigation.ChangePassword}
+          component={ChangePasswordScreen}
+        />
 
         <Stack.Screen name={Navigation.Post} component={PostScreen} />
 

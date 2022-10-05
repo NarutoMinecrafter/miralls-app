@@ -25,6 +25,9 @@ export default function Input({
   validationErrorText,
   textInputStyle,
   wrapperStyle,
+  passwordVisibilityProps = null,
+  rightIconProps = null,
+  handlePasswordVisibilityProps = null,
 }) {
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
@@ -47,54 +50,66 @@ export default function Input({
         </Text>
       ) : null}
 
-      <TextInput
-        style={[
-          style.TextInput,
-          textInputStyle,
-          validationError || validationErrorText
-            ? style.TextInputValidationError
-            : null,
-        ]}
-        name={name}
-        placeholder={placeholder}
-        placeholderTextColor={
-          validationError || validationErrorText
-            ? Colors.Input.ValidationError.PlaceholderTextColor
-            : placeholderTextColor
-        }
-        secureTextEntry={
-          passwordVisiblityButton ? passwordVisibility : secureTextEntry
-        }
-        textContentType={textContentType}
-        dataDetectorTypes={dataDetectorTypes}
-        keyboardType={keyboardType}
-        maxLength={maxLength}
-        onChange={onChange}
-        onChangeText={(text) => {
-          setTextInputValue(text);
-          onChangeText(text);
-        }}
-        onFocus={onFocus}
-        onEndEditing={onEndEditing}
-        value={textInputValue}
-        multiline={multiline}
-      ></TextInput>
-      {passwordVisiblityButton ? (
-        <View style={pressableWrapperStyle}>
-          <Pressable onPress={handlePasswordVisibility}>
-            <MaterialCommunityIcons
-              name={rightIcon}
-              size={22}
-              color={Colors.White}
-            />
-          </Pressable>
-        </View>
-      ) : (
-        <></>
-      )}
-      {validationErrorText && (
-        <Text style={style.ErrorText}>{validationErrorText}</Text>
-      )}
+      <View>
+        <TextInput
+          style={[
+            style.TextInput,
+            textInputStyle,
+            validationError || validationErrorText
+              ? style.TextInputValidationError
+              : null,
+          ]}
+          name={name}
+          placeholder={placeholder}
+          placeholderTextColor={
+            validationError || validationErrorText
+              ? Colors.Input.ValidationError.PlaceholderTextColor
+              : placeholderTextColor
+          }
+          secureTextEntry={
+            passwordVisiblityButton
+              ? passwordVisibilityProps === null
+                ? passwordVisibility
+                : passwordVisibilityProps
+              : secureTextEntry
+          }
+          textContentType={textContentType}
+          dataDetectorTypes={dataDetectorTypes}
+          keyboardType={keyboardType}
+          maxLength={maxLength}
+          onChange={onChange}
+          onChangeText={(text) => {
+            setTextInputValue(text);
+            onChangeText(text);
+          }}
+          onFocus={onFocus}
+          onEndEditing={onEndEditing}
+          value={textInputValue}
+          multiline={multiline}
+        ></TextInput>
+        {passwordVisiblityButton ? (
+          <View style={style.PressableWrapperStyle}>
+            <Pressable
+              onPress={
+                handlePasswordVisibilityProps === null
+                  ? handlePasswordVisibility
+                  : handlePasswordVisibilityProps
+              }
+            >
+              <MaterialCommunityIcons
+                name={rightIconProps === null ? rightIcon : rightIconProps}
+                size={22}
+                color={Colors.White}
+              />
+            </Pressable>
+          </View>
+        ) : (
+          <></>
+        )}
+        {validationErrorText && (
+          <Text style={style.ErrorText}>{validationErrorText}</Text>
+        )}
+      </View>
     </View>
   );
 }
@@ -127,14 +142,13 @@ const style = {
   ErrorText: {
     color: Colors.InputLabel.ValidationError.Color,
   },
-};
-
-const pressableWrapperStyle = {
-  display: "flex",
-  alignItems: "center",
-  position: "absolute",
-  right: 15,
-  // backgroundColor: 'red',
-  top: Sizes.Input.MarginTop + 6,
-  height: "100%",
+  PressableWrapperStyle: {
+    display: "flex",
+    alignItems: "center",
+    position: "absolute",
+    right: 15,
+    // backgroundColor: 'red',
+    top: Sizes.Input.MarginTop + 6,
+    height: "100%",
+  },
 };

@@ -92,6 +92,14 @@ Register:
     PHONE_NUMBER_ALREADY_REGISTRED: Указанный номер телефона уже зарегистрирован
     TOO_MANY_REQUESTS: Следующий код можно будет отправить через {seconds} секунд(ы)
 
+ChangePasswordScreen:
+  Title: Изменить пароль
+  OldPassword: Старый пароль
+  NewPassword: Новый пароль
+  ValidationError:
+    InvalidPassword: Невалидный пароль
+    PasswordsNotMatch: Пароли не совпадают
+
 ProfileScreen:
   Posts: Публикации
   Followers: Подписчики
