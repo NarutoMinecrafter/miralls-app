@@ -64,6 +64,7 @@ export default function ProfileScreen({ navigation }) {
               name="account-balance-wallet"
               size={24}
               color={Colors.Primary}
+              onPress={() => navigation.navigate("WalletScreen")}
             />
           </View>
           <View style={s.RightMenu.Icon}>

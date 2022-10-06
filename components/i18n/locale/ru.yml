@@ -159,6 +159,10 @@ DialogsScreen:
   EditMessage: Редактировать сообщение
   Placeholder: Введите сообщение...
 
+WalletScreen:
+  Title: Кошелёк
+  Withdrawal: Вывод средств
+
 Subscriptions:
   Title: Платные подписки
   Button: Улучшить
