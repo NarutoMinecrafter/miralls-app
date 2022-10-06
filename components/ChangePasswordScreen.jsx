@@ -162,38 +162,7 @@ const s = {
   Fields: {
     marginBottom: 16,
   },
-  Picture: {
-    Wrapper: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    View: {
-      display: "flex",
-      alignItems: "center",
-      padding: 4,
-      borderRadius: 100,
-    },
-    Image: {
-      borderRadius: 100,
-      height: 96,
-      width: 96,
-      marginBottom: 16,
-    },
-    Link: {
-      fontFamily: "SF-Regular",
-      fontSize: 16,
-      textAlign: "center",
-    },
-  },
   Input: {
     marginTop: Sizes.Input.MarginTop,
-  },
-  LogOutButton: {
-    position: "absolute",
-    width: "100%",
-    bottom: Sizes.Screen.Padding,
-    left: Sizes.Screen.Padding,
   },
 };

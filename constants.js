@@ -17,6 +17,7 @@ export const Navigation = {
   Search: "SearchScreen",
   User: "UserScreen",
   Wallet: "WalletScreen",
+  Settings: "SettingsScreen",
 
   Dialogs: "DialogsScreen",
   Dialog: "DialogScreen",

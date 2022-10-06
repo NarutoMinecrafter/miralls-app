@@ -163,6 +163,14 @@ WalletScreen:
   Title: Кошелёк
   Withdrawal: Вывод средств
 
+SettingsScreen:
+  Title: Настройки
+  Language: Язык
+  Languages:
+    RU: Русский
+    UA: Украинский
+    EN: Английский
+
 Subscriptions:
   Title: Платные подписки
   Button: Улучшить

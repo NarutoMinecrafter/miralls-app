@@ -3,8 +3,10 @@ import { View, TextInput, Pressable, Text } from "react-native";
 import { Sizes, Colors } from "../constants";
 import { useTogglePasswordVisibility } from "./hooks/useTogglePasswordVisibility";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
 
 export default function Input({
+  picker,
   name,
   placeholder,
   placeholderTextColor,
@@ -28,6 +30,7 @@ export default function Input({
   passwordVisibilityProps = null,
   rightIconProps = null,
   handlePasswordVisibilityProps = null,
+  children,
 }) {
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
@@ -51,42 +54,59 @@ export default function Input({
       ) : null}
 
       <View>
-        <TextInput
-          style={[
-            style.TextInput,
-            textInputStyle,
-            validationError || validationErrorText
-              ? style.TextInputValidationError
-              : null,
-          ]}
-          name={name}
-          placeholder={placeholder}
-          placeholderTextColor={
-            validationError || validationErrorText
-              ? Colors.Input.ValidationError.PlaceholderTextColor
-              : placeholderTextColor
-          }
-          secureTextEntry={
-            passwordVisiblityButton
-              ? passwordVisibilityProps === null
-                ? passwordVisibility
-                : passwordVisibilityProps
-              : secureTextEntry
-          }
-          textContentType={textContentType}
-          dataDetectorTypes={dataDetectorTypes}
-          keyboardType={keyboardType}
-          maxLength={maxLength}
-          onChange={onChange}
-          onChangeText={(text) => {
-            setTextInputValue(text);
-            onChangeText(text);
-          }}
-          onFocus={onFocus}
-          onEndEditing={onEndEditing}
-          value={textInputValue}
-          multiline={multiline}
-        ></TextInput>
+        {picker ? (
+          <Picker
+            dropdownIconColor={"#eee"}
+            selectedValue={value}
+            onValueChange={(itemValue) => onChangeText(itemValue)}
+            style={[
+              style.TextInput,
+              textInputStyle,
+              validationError || validationErrorText
+                ? style.TextInputValidationError
+                : null,
+            ]}
+          >
+            {children}
+          </Picker>
+        ) : (
+          <TextInput
+            style={[
+              style.TextInput,
+              textInputStyle,
+              validationError || validationErrorText
+                ? style.TextInputValidationError
+                : null,
+            ]}
+            name={name}
+            placeholder={placeholder}
+            placeholderTextColor={
+              validationError || validationErrorText
+                ? Colors.Input.ValidationError.PlaceholderTextColor
+                : placeholderTextColor
+            }
+            secureTextEntry={
+              passwordVisiblityButton
+                ? passwordVisibilityProps === null
+                  ? passwordVisibility
+                  : passwordVisibilityProps
+                : secureTextEntry
+            }
+            textContentType={textContentType}
+            dataDetectorTypes={dataDetectorTypes}
+            keyboardType={keyboardType}
+            maxLength={maxLength}
+            onChange={onChange}
+            onChangeText={(text) => {
+              setTextInputValue(text);
+              onChangeText(text);
+            }}
+            onFocus={onFocus}
+            onEndEditing={onEndEditing}
+            value={textInputValue}
+            multiline={multiline}
+          />
+        )}
         {passwordVisiblityButton ? (
           <View style={style.PressableWrapperStyle}>
             <Pressable

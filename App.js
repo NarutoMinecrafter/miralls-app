@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFonts } from "expo-font";
 import { Root } from "react-native-alert-notification";
-import i18n from "i18n-js";
+import I18n from "i18n-js";
 import Preloader from "./components/Preloader";
 import { Provider } from "react-redux";
 import { Store } from "./redux/store";
@@ -14,6 +14,7 @@ import {
   useTheme,
 } from "@react-native-material/core";
 import { Colors } from "./constants";
+import * as SecureStore from "expo-secure-store";
 
 LogBox.ignoreLogs([
   "Non-serializable values were found in the navigation state",
@@ -22,8 +23,6 @@ LogBox.ignoreLogs([
 ]);
 
 export default function App() {
-  i18n.locale = "ru";
-
   // Загружаем шрифты
   const [loaded] = useFonts({
     "SF-Thin": require("./assets/fonts/SF-Pro-Rounded-Thin.otf"),
@@ -44,6 +43,13 @@ export default function App() {
       },
     },
   };
+
+  useEffect(() => {
+    (async () => {
+      const language = await SecureStore.getItemAsync("language");
+      I18n.locale = language || "ru";
+    })();
+  }, []);
 
   if (!loaded) return <Preloader />;
 
