@@ -1,8 +1,8 @@
 import React from "react";
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import { Colors } from "../constants";
 import _ from "./i18n";
-import UserPictureRounded from "./UserPictureRounded";
+import UserItem from "./UserItem";
 
 export default function SearchScreen({ navigation }) {
     const data = [
@@ -68,21 +68,10 @@ export default function SearchScreen({ navigation }) {
         <View style={style.Wrapper}>
             <View style={style.Header}>
                 <Text style={style.Bold} onPress={() => navigation.goBack()}>{_("Back")}</Text>
-                <TextInput style={style.Input} placeholder={_('Search')} />
+                <TextInput style={style.Input} placeholderTextColor={Colors.SubText} placeholder={_('Search')} />
             </View>
             <ScrollView style={style.Container}>
-                {data.map(item => <TouchableOpacity key={item.id} style={style.Item} onPress={() => navigation.navigate("UserScreen", { userId: item.id })}>
-                    <UserPictureRounded
-                        uri={item.avatar}
-                        size={55}
-                        borderWidth={2}
-                    />
-                    <View>
-                        <Text style={style.Bold}>{item.nickname}</Text>
-                        <Text style={style.SubText}>{item.name}</Text>
-                        <Text style={style.SubText}>{item.status}</Text>
-                    </View>
-                </TouchableOpacity>)}
+                {data.map(item => <UserItem key={item.id} {...item} />)}
             </ScrollView>
         </View>
     )
@@ -112,14 +101,8 @@ const style = {
     Container: {
         paddingHorizontal: 10
     },
-    Item: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
     Bold: {
+        color: Colors.White,
         fontWeight: 'bold'
     },
-    SubText: {
-        color: Colors.SubText
-    }
 }
