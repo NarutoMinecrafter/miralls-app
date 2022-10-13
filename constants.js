@@ -19,6 +19,7 @@ export const Navigation = {
   User: "UserScreen",
   Wallet: "WalletScreen",
   Settings: "SettingsScreen",
+  Withdrawal: "WithdrawalScreen",
 
   Dialogs: "DialogsScreen",
   Dialog: "DialogScreen",

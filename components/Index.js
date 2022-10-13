@@ -33,6 +33,7 @@ import UserScreen from "./UserScreen";
 import ChangePasswordScreen from "./ChangePasswordScreen";
 import WalletScreen from "./WalletScreen";
 import SettingsScreen from "./SettingsScreen";
+import WithdrawalScreen from "./WithdrawalScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -113,6 +114,11 @@ export default function Index() {
         <Stack.Screen name={Navigation.Wallet} component={WalletScreen} />
 
         <Stack.Screen name={Navigation.Settings} component={SettingsScreen} />
+
+        <Stack.Screen
+          name={Navigation.Withdrawal}
+          component={WithdrawalScreen}
+        />
 
         <Stack.Screen
           name={Navigation.ChangePassword}

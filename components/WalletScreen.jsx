@@ -50,7 +50,7 @@ export default function WalletScreen({ navigation: { navigate } }) {
                     <Text style={[s.Content.Tetx, s.Content.BalanceText]}>{balanceFormatter.format(balance)}</Text>
                   </View>
                   <Text style={[s.Content.Tetx, s.Content.Time, s.Content.ItemBalancetext]}>{courseFormatter.format(balance * COURSE)}</Text>
-                  <Button style={[s.Content.Tetx, s.Content.Button]} title={t.Withdrawal} variant="outlined" />
+                  <Button style={[s.Content.Tetx, s.Content.Button]} title={t.Withdrawal} variant="outlined" onPress={() => navigate("WithdrawalScreen")} />
                 </View>
                 <ScrollView>
                   {Object.keys(mockData).map((key) => <>

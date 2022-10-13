@@ -6,22 +6,15 @@ import DefaultScreen from "./DefaultScreen";
 import Header from "./Header";
 import Input from "./Input";
 import _ from "./i18n";
-import I18n from "i18n-js";
-import * as SecureStore from 'expo-secure-store';
+import { Button } from "@react-native-material/core";
 
-export default function SettingsScreen({ navigation }) {
-  const [language, setLanguage] = useState(I18n.locale || '');
-
-  function handleLanguageChange(newLanguage) {
-    console.log('language', newLanguage)
-    console.log('I18n.locale', I18n.locale)
-    I18n.locale = newLanguage
-    SecureStore.setItemAsync('language', newLanguage)
-    setLanguage(newLanguage)
-  }
+export default function WithdrawalScreen({ navigation }) {
+  const [method, setMethod] = useState('Visa');
+  const [credentials, setCredentials] = useState('');
+  const [sum, setSum] = useState('0');
 
   // Локализация
-  const t = _("SettingsScreen");
+  const t = _("WithdrawalScreen");
   return (
     <DefaultScreen
       content={
@@ -31,11 +24,14 @@ export default function SettingsScreen({ navigation }) {
           />
           <ScrollView>
             <View style={s.Fields}>
-              <Input style={s.Input} label={t.Language} value={language} onChangeText={handleLanguageChange} picker>
-                <Picker.Item label={t.Languages.RU} value={'ru'} />
-                <Picker.Item label={t.Languages.UA} value={'ua'} />
-                <Picker.Item label={t.Languages.EN} value={'en'} />
+              <Input style={s.Input} label={t.Method} value={method} onChangeText={text => setMethod(text)} picker>
+                <Picker.Item label="Visa" value="Visa" />
+                <Picker.Item label="MasterCard" value="MasterCard" />
+                <Picker.Item label="PayPal" value="PayPal" />
               </Input>
+              <Input style={s.Input} label={t.Credentials} value={credentials} onChangeText={text => setCredentials(text)} />
+              <Input style={s.Input} label={t.Sum} value={sum} keyboardType="numeric" onChangeText={text => setSum(text)} />
+              <Button style={s.Button} title={t.Button} />
             </View>
           </ScrollView>
         </View>
@@ -64,4 +60,7 @@ const s = {
     borderWidth: Sizes.Input.BorderWidth,
     borderColor: Colors.Input.BorderColor,
   },
+  Button: {
+    marginTop: 10
+  }
 };

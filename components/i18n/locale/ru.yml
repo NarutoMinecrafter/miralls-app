@@ -171,6 +171,13 @@ SettingsScreen:
     UA: Украинский
     EN: Английский
 
+WithdrawalScreen:
+  Title: Вывод средств
+  Method: Способ вывода
+  Credentials: Реквизиты
+  Sum: Сумма
+  Button: Вывести средства
+
 Subscriptions:
   Title: Платные подписки
   Button: Улучшить
