@@ -6,6 +6,9 @@ import Header from './Header';
 import CoinIcon from '../assets/coin-icon.png';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from "@react-native-material/core";
+import { COURSE } from './utils/constants';
+import Intl from 'intl'
+import 'intl/locale-data/jsonp/ru-RU'
 
 export default function WalletScreen({ navigation: { navigate } }) {
     const t = _('WalletScreen')
@@ -23,6 +26,15 @@ export default function WalletScreen({ navigation: { navigate } }) {
       ],
     }
 
+    const balance = 27695
+
+    const balanceFormatter = new Intl.NumberFormat('ru-RU')
+
+    const courseFormatter = new Intl.NumberFormat('ru-RU', {
+      style: 'currency',
+      currency: 'USD',
+    })
+
     return (
         <View style={s.GlobalWrapper}>
             <View style={s.Content.Wrapper}>
@@ -35,8 +47,9 @@ export default function WalletScreen({ navigation: { navigate } }) {
                 <View style={s.Content.BalanceHeader}>
                   <View style={s.Content.Balance}>
                     <Image source={CoinIcon} style={s.Content.BalanceIcon} />
-                    <Text style={[s.Content.Tetx, s.Content.BalanceText]}>{'27 695'}</Text>
+                    <Text style={[s.Content.Tetx, s.Content.BalanceText]}>{balanceFormatter.format(balance)}</Text>
                   </View>
+                  <Text style={[s.Content.Tetx, s.Content.Time, s.Content.ItemBalancetext]}>{courseFormatter.format(balance * COURSE)}</Text>
                   <Button style={[s.Content.Tetx, s.Content.Button]} title={t.Withdrawal} variant="outlined" />
                 </View>
                 <ScrollView>
@@ -73,7 +86,7 @@ const s = {
           marginTop: 22,
       },
       Tetx: {
-        fontSize: 17,
+        fontSize: 14,
         color: Colors.White
       },
       BalanceHeader: {
@@ -85,11 +98,11 @@ const s = {
         alignItems: 'center'
       },
       BalanceIcon: {
-        width: 70,
-        height: 70
+        width: 40,
+        height: 40
       },
       BalanceText: {
-        fontSize: 60,
+        fontSize: 45,
         fontWeight: 'bold'
       },
       Button: {
@@ -110,15 +123,15 @@ const s = {
         color: Colors.SubText
       },
       Icon: {
-        width: 40,
-        height: 40
+        width: 25,
+        height: 25
       },
       ItemBalance: {
         flexDirection: 'row',
         alignItems: 'center'
       },
       ItemBalancetext: {
-        fontSize: 28,
+        fontSize: 22,
       },
       ItemBalancetextPlus: {
         color: '#5bc35b'
