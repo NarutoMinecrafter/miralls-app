@@ -15,6 +15,7 @@ export const Navigation = {
   ChangePassword: "ChangePasswordScreen",
   Post: "PostScreen",
   Search: "SearchScreen",
+  Subscripers: "SubscripersScreen",
   User: "UserScreen",
   Wallet: "WalletScreen",
   Settings: "SettingsScreen",

@@ -1,10 +1,11 @@
 import React from "react";
-import { ScrollView, Text, TextInput, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Colors } from "../constants";
+import Header from "./Header";
 import _ from "./i18n";
 import UserItem from "./UserItem";
 
-export default function SearchScreen({ navigation }) {
+export default function SubscripersScreen({ navigation }) {
     const data = [
         { 
             id: 1,
@@ -66,10 +67,11 @@ export default function SearchScreen({ navigation }) {
 
     return (
         <View style={style.Wrapper}>
-            <View style={style.Header}>
-                <Text style={style.Bold} onPress={() => navigation.goBack()}>{_("Back")}</Text>
-                <TextInput style={style.Input} placeholderTextColor={Colors.SubText} placeholder={_('Search')} />
-            </View>
+              <Header
+                  backButton={true}
+                  backButtonText={_("Back")}
+                  wrapperStyle={{ marginBottom: 0, paddingHorizontal: 16 }}
+                />
             <ScrollView style={style.Container}>
                 {data.map(item => <UserItem key={item.id} navigation={navigation} {...item} />)}
             </ScrollView>
@@ -83,26 +85,7 @@ const style = {
         width: '100%',
         backgroundColor: Colors.BG
     },
-    Header: {
-        flexDirection: 'row',
-        width: '100%',
-        alignItems: 'center',
-        padding: 10,
-    },
-    Input: {
-        backgroundColor: '#222',
-        color: Colors.White,
-        flex: 1,
-        borderRadius: 20,
-        padding: 5,
-        marginLeft: 10,
-        fontSize: 15
-    },
     Container: {
         paddingHorizontal: 10
-    },
-    Bold: {
-        color: Colors.White,
-        fontWeight: 'bold'
     },
 }

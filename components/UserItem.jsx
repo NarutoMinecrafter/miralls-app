@@ -4,7 +4,7 @@ import { Colors } from "../constants";
 import _ from "./i18n";
 import UserPictureRounded from "./UserPictureRounded";
 
-export default function UserItem({ avatar, nickname, name, status, userId }) {
+export default function UserItem({ avatar, nickname, name, status, userId, navigation }) {
   return (
     <TouchableOpacity style={style.Item} onPress={() => navigation.navigate("UserScreen", { userId })}>
       <UserPictureRounded

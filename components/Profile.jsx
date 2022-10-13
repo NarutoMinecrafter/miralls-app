@@ -51,18 +51,18 @@ export default function Profile({ navigation, profile, loadPosts, rightMenuIcons
                     </Text>
                     <Text style={s.Stats.Text2}>{t.Posts}</Text>
                   </View>
-                  <View style={s.Stats.View}>
+                  <TouchableOpacity style={s.Stats.View} onPress={() => navigation.navigate("SubscripersScreen")}>
                     <Text style={s.Stats.Text1}>
                       {numberToReadableStr(user.followers_count)}
                     </Text>
                     <Text style={s.Stats.Text2}>{t.Followers}</Text>
-                  </View>
-                  <View style={s.Stats.View}>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={s.Stats.View} onPress={() => navigation.navigate("SubscripersScreen")}>
                     <Text style={s.Stats.Text1}>
                       {numberToReadableStr(user.followed_count)}
                     </Text>
                     <Text style={s.Stats.Text2}>{t.Followed}</Text>
-                  </View>
+                  </TouchableOpacity>
                 </View>
               </View>
               <View

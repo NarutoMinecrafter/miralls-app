@@ -24,6 +24,7 @@ import { getTokens, isTokenExpired } from "./utils/jwt";
 import _ from "./i18n";
 import PostScreen from "./PostScreen";
 import ArchiveScreen from "./ArchiveScreen";
+import SubscripersScreen from "./SubscripersScreen";
 import SearchScreen from "./SearchScreen";
 import { Navigation } from "../constants";
 import DialogsScreen from "./DialogsScreen";
@@ -121,6 +122,10 @@ export default function Index() {
         <Stack.Screen name={Navigation.Post} component={PostScreen} />
 
         <Stack.Screen name={Navigation.Search} component={SearchScreen} />
+        <Stack.Screen
+          name={Navigation.Subscripers}
+          component={SubscripersScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
